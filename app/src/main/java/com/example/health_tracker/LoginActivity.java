@@ -3,6 +3,7 @@ package com.example.health_tracker;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -16,6 +17,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,6 +31,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,10 +46,14 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin,buttonReset;
     private TextView create_account;
     private String Email,Password,email_forget_string;
-    private TextInputEditText editTextEmail,editTextPassword;
+    private TextInputEditText editTextPassword;
     private FirebaseAuth firebaseAuthLogin;
     private Dialog dialog;
     private EditText email_forget;
+    private AutoCompleteTextView editTextEmail;
+    private SharedPreferences preferencesEmail;
+    private ArrayAdapter<String> arrayAdapterEmail;
+    private List<String> listEmail=new ArrayList<>();
 
 
     @Override
@@ -65,6 +74,17 @@ public class LoginActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressBar);
         buttonReset=dialog.findViewById(R.id.button_forget);
         email_forget=dialog.findViewById(R.id.forget_email);
+        preferencesEmail=getSharedPreferences("HealthTracker",MODE_PRIVATE);
+
+
+
+        //adapter for autocomplete edit text
+        listEmail.clear();
+        listEmail.add(preferencesEmail.getString("email",""));
+        arrayAdapterEmail=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listEmail);
+        editTextEmail.setAdapter(arrayAdapterEmail);
+        editTextEmail.setThreshold(1);
+
 
 
         firebaseAuthLogin=FirebaseAuth.getInstance();

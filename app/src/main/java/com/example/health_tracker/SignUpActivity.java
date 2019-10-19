@@ -79,9 +79,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(69, 179, 157)));
         buttonSignUp.setTextColor(Color.parseColor("#9B9999"));
-        sharedPreferences = getSharedPreferences("bakery", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
-        firebaseDatabaseSignUp= FirebaseDatabase.getInstance().getReference().child("Customers");
+        firebaseDatabaseSignUp= FirebaseDatabase.getInstance().getReference().child("User");
 
        findViewById(R.id.sign_up_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,21 +156,15 @@ public class SignUpActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         editPhoneNumber.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(49,196,17)));
                     }
-
-
                 }
                 else {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         editPhoneNumber.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(255,255,255)));
                     }
-
-
                 }
 
                 Validate(PhoneNumber, Email, Name, Password);
-
-
             }
 
             @Override
@@ -315,7 +309,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         editorEmail = sharedPreferences.edit();
-        editorEmail.putString("email",Email);
+        editorEmail.putString("email",Email).apply();
 
 
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
