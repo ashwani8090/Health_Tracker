@@ -14,10 +14,12 @@
         android:orientation="vertical">
 
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/colorPrimaryDark">
+            android:background="@color/colorPrimary">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,6 +129,60 @@
                 android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textColor="#000"
+            android:layout_marginStart="10dp"
+
+            />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+
+            >
+
+            <RadioButton
+                android:id="@+id/radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:checked="true"
+                />
+            <RadioButton
+                android:id="@+id/radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                />
+
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Age"
+            android:textColor="#000"
+            android:layout_marginStart="10dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C4C2C2"
+            android:layout_marginTop="2dp"
+            android:dropDownWidth="50dp"
+            android:layout_marginStart="10dp">
+
+        </Spinner>
+
+
         <Button
             android:id="@+id/signup_button"
             android:layout_width="match_parent"
@@ -140,6 +196,8 @@
             android:text="SIGN UP"
             android:textColor="#9B9999"
             android:textSize="15sp" />
+
+
 
 
     </LinearLayout>

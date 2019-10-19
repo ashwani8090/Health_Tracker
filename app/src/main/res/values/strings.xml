@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Health_Tracker</string>
+    <string name="login">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_account">Don\'t have account ?</string>
 </resources>

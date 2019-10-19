@@ -10,7 +10,7 @@
         android:id="@+id/logo_login"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimary">
 
 
         <TextView
@@ -19,7 +19,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
-            android:text="LOGIN"
+            android:text="@string/login"
             android:textColor="#000"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -51,7 +51,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:hint="Email"
+            android:hint="@string/email"
             android:textSize="15sp" />
 
     </android.support.design.widget.TextInputLayout>
@@ -74,7 +74,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:textSize="15sp" />
     </android.support.design.widget.TextInputLayout>
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLogin"
-        android:text="Forget Password?"
+        android:text="@string/forget_password"
         android:layout_alignRight="@+id/buttonLogin"
         android:layout_marginTop="5dp"
         android:textStyle="bold"
@@ -118,25 +118,26 @@
         android:layout_gravity="end"
         android:drawablePadding="2dp"
         android:gravity="center"
-        android:layout_marginBottom="80dp"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:layout_toRightOf="@+id/message"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginStart="2dp"
+        android:layout_marginBottom="10dp"
         />
 
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have account ?"
+        android:text="@string/don_t_have_account"
         android:gravity="center"
         android:textColor="#000"
-        android:layout_marginBottom="80dp"
         android:layout_marginStart="10dp"
         android:layout_alignTop="@+id/create_account"
         android:layout_below="@+id/forget"
+        android:layout_marginBottom="10dp"
+
 
         />
 
