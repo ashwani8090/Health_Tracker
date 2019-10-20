@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_dashboard"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="5dp">
+        <TextView
+            android:id="@+id/menu_dashboard"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:drawableTint="@color/gray"
+            android:drawableStart="@drawable/ic_pulse"
+            android:paddingStart="25dp"
+            android:gravity="center"
+            android:backgroundTint="@color/lighgray"
+            android:background="@drawable/oval_background"
+            />
+
+        <TextView
+            android:id="@+id/menu_dashboard_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Topics"
+            android:textStyle="bold"
+            android:layout_below="@+id/menu_dashboard"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            />
+
+</RelativeLayout>

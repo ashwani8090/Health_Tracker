@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -77,22 +78,23 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerAge=findViewById(R.id.spinner_age);
         radioGroupAge=findViewById(R.id.radio_group);
 
-        buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(69, 179, 157)));
+        buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185   )));
         buttonSignUp.setTextColor(Color.parseColor("#9B9999"));
         sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
         firebaseDatabaseSignUp= FirebaseDatabase.getInstance().getReference().child("User");
 
-       findViewById(R.id.sign_up_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.sign_up_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
              startActivity(new Intent(getApplicationContext(),LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+             finish();
 
             }
         });
 
-//spinner for age
+     //spinner for age
        ageList.clear();
        for(int i=1;i<=99;i++){
            ageList.add(i);
@@ -122,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-//gender
+         //gender
 
         radioGroupAge.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -133,8 +135,6 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     gender = "female";
                 }
-
-
             }
         });
 
@@ -274,13 +274,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 Password = String.valueOf(s).trim();
-
-
-
-
                 Validate(PhoneNumber, Email, Name, Password);
-
-
             }
 
             @Override
@@ -315,55 +309,33 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
-
                 if (task.isSuccessful()) {
-
-
-
                     firebaseDatabaseSignUp = firebaseDatabaseSignUp.child(""
                             + Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-
                     firebaseAuth.getCurrentUser().sendEmailVerification();
-
                     //firebase username
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(""+Name).build();
+                     firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
 
-
-
-                    firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
-
-
-                   setterSignup=new Getter_setter_Signup(PhoneNumber,Name,gender,Age);
+                     setterSignup=new Getter_setter_Signup(PhoneNumber,Name,gender,Age);
                     firebaseDatabaseSignUp.setValue(setterSignup).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-
-
                             progressBar.setVisibility(View.INVISIBLE);
                             alert.setMessage("Verify link sent to your email").
                                     setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
-                                    startActivity(new Intent(getApplicationContext(),LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                     alert.setCancelable(true);
+                                    startActivity(new Intent(getApplicationContext(),LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                    finish();
                                     firebaseAuth.signOut();
 
                                 }
                             }).show();
-
-
-
-
-
-
-
                         }
                     });
-
-
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -396,14 +368,14 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                 buttonSignUp.setEnabled(false);
-                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(69, 179, 157)));
+                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185  )));
                 buttonSignUp.setTextColor(Color.parseColor("#9B9999"));
 
 
 
             } else {
                 buttonSignUp.setEnabled(true);
-                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(22, 160, 133)));
+                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(86, 101, 115  )));
                 buttonSignUp.setTextColor(Color.BLACK);
 
             }

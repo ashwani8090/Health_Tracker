@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#138d75 </color>
-    <color name="colorPrimaryDark">#117a65</color>
-    <color name="colorAccent">#45b39d</color>
+    <color name="colorPrimary">#566573</color>
+    <color name="colorPrimaryDark">#273746</color>
+    <color name="colorAccent">#57575A</color>
+    <color name="colorFLoatingButton">#f24c4c</color>
+    <color name="colorHover">#F56A6A</color>
+    <color name="white">#ffff</color>
+    <color name="black">#000</color>
+    <color name="gray">#636262</color>
+    <color name="lighgray">#BDBABA</color>
 </resources>

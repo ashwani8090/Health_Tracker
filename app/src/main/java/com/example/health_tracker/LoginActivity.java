@@ -2,6 +2,7 @@ package com.example.health_tracker;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences preferencesEmail;
     private ArrayAdapter<String> arrayAdapterEmail;
     private List<String> listEmail=new ArrayList<>();
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editorEmail;
 
 
     @Override
@@ -70,11 +73,12 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin=findViewById(R.id.buttonLogin);
         editTextEmail=findViewById(R.id.login_email);
         editTextPassword=findViewById(R.id.login_password);
-        buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(69, 179, 157 )));
+        buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185 )));
         progressBar=findViewById(R.id.progressBar);
         buttonReset=dialog.findViewById(R.id.button_forget);
         email_forget=dialog.findViewById(R.id.forget_email);
         preferencesEmail=getSharedPreferences("HealthTracker",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
 
 
@@ -88,6 +92,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
         firebaseAuthLogin=FirebaseAuth.getInstance();
+
+
+        if ((firebaseAuthLogin.getCurrentUser() != null) && (firebaseAuthLogin.getCurrentUser().isEmailVerified())) {
+            startActivity(new Intent(this, OptionsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
+        }
+
+
+
+
+
 
         alert=new AlertDialog.Builder(this);
         create_account.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +233,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void Login_FireBase(String email, String password) {
 
+        editorEmail = sharedPreferences.edit();
+        editorEmail.putString("email",Email).apply();
 
 
         firebaseAuthLogin.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -225,13 +242,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
-
-
-                    if(firebaseAuthLogin.getCurrentUser().isEmailVerified()) {
+                    if(Objects.requireNonNull(firebaseAuthLogin.getCurrentUser()).isEmailVerified()) {
                         try {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Welcome To Bakery", Toast.LENGTH_SHORT).show();
 
+                            startActivity(new Intent(getApplicationContext(),OptionsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            finish();
                         }
                         catch (Exception e){
 
@@ -282,12 +298,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 buttonLogin.setEnabled(false);
-                buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(69, 179, 157 )));
+                buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185  )));
 
             }
             else{
                 buttonLogin.setEnabled(true);
-                buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(22, 160, 133)));
+                buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(86, 101, 115  )));
 
             }
 
