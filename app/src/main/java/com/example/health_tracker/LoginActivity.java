@@ -99,11 +99,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-
-
-
-
-
         alert=new AlertDialog.Builder(this);
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
