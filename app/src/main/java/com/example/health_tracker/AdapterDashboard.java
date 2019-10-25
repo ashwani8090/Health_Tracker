@@ -55,7 +55,7 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.View
                 if(viewHolderDashboard.getAdapterPosition()==0){
                     context.startActivity(new Intent(context,TopicsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }else if(viewHolderDashboard.getAdapterPosition()==1){
-                    context.startActivity(new Intent(context,TopicsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                  //  context.startActivity(new Intent(context,TopicsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }else if(viewHolderDashboard.getAdapterPosition()==2){
                     context.startActivity(new Intent(context,DailyStatusActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }else if(viewHolderDashboard.getAdapterPosition()==3){

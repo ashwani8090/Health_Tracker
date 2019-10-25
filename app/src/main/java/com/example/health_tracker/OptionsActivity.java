@@ -93,45 +93,8 @@ public class OptionsActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
 
-        try {
-            firebaseProfile = FirebaseDatabase.getInstance().getReference("User").
-                    child(""+ Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-            firebaseProfile.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    try {
-                        getterSetterSignup = dataSnapshot.getValue(Getter_setter_Signup.class);
-
-                        editorAge = sharedPreferences.edit();
-                        editorHeight=sharedPreferences.edit();
-                        editorWeight=sharedPreferences.edit();
-                        editorName=sharedPreferences.edit();
-                        editorAge.putString("age",getterSetterSignup.getAge()).apply();
-                        editorHeight.putString("height",""+getterSetterSignup.getHeight()).apply();
-                        editorWeight.putString("weight",""+getterSetterSignup.getWeight()).apply();
-                        editorName.putString("name",getterSetterSignup.getName()).apply();
 
 
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         final Context wrapper = new ContextThemeWrapper(this, R.style.PopupMenu);
         popupMenu = new PopupMenu(wrapper, logout);
@@ -227,22 +190,16 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-              /*  Map<String, Objects> updates = new HashMap<String,Objects>();
-                Getter_setter_Signup getter_setter_signup=new Getter_setter_Signup();
-                getter_setter_signup.setHeight( HeightEdit.getText().toString());
 
-                updates.put("height",);
-                updates.put("weight",getter_setter_signup.setWeight( WeightEdit.getText().toString()));
-                updates.put("age", AgeEdit.getText().toString());
-*/
-              //  firebaseProfile.updateChildren(updates);
 
-                firebaseProfile.child("height").setValue(Integer.parseInt(HeightEdit.getText().toString()));
-                firebaseProfile.child("weight").setValue(Double.parseDouble(WeightEdit.getText().toString()));
+
+                firebaseProfile.child("height").setValue(HeightEdit.getText().toString());
+                firebaseProfile.child("weight").setValue(WeightEdit.getText().toString());
                 firebaseProfile.child("age").setValue(AgeEdit.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
+                            onStart();
                             Toast.makeText(OptionsActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -262,12 +219,30 @@ public class OptionsActivity extends AppCompatActivity {
 
         //profile shared preference
         try {
-            profileDescription.setText( sharedPreferences.getString("age", "years")+" years,"+"\n"+
-                    sharedPreferences.getString("height", "cm")+" c.m, "+sharedPreferences.getString("weight", "kg")+" k.g");
-            WeightEdit.setText("" + sharedPreferences.getString("weight", "years"));
-            HeightEdit.setText("" + sharedPreferences.getString("height", "years"));
-            AgeEdit.setText("" + sharedPreferences.getString("age", "years"));
-        }
+
+            firebaseProfile=FirebaseDatabase.getInstance().getReference("User").child(""+firebaseAuth.getCurrentUser().getUid());
+            firebaseProfile.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    Getter_setter_Signup getter_setter_signup=dataSnapshot.getValue(Getter_setter_Signup.class);
+                    profileDescription.setText(String.format("%s years\n%s cm, %s kg", getter_setter_signup.getAge(), getter_setter_signup.getHeight(), getter_setter_signup.getWeight()));
+                    WeightEdit.setText(""+getter_setter_signup.getWeight());
+                    HeightEdit.setText(""+getter_setter_signup.getHeight());
+                    AgeEdit.setText(""+getter_setter_signup.getAge());
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+               }
         catch (Exception e){
             e.printStackTrace();
         }
