@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".BodyTemperatureActivity">
+
+
+    <TextView
+        android:id="@+id/titleTemperature"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:text="Add Body Temperature"
+        android:textColor="@color/dark_gray"
+        android:textSize="25sp"
+        android:background="@drawable/background_item"
+        android:textStyle="bold" />
+
+
+    <RelativeLayout
+        android:id="@+id/numberPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingBottom="20dp">
+
+
+        <TextView
+            android:id="@+id/titletemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Systolic"
+            android:textColor="@color/gray"
+            android:textStyle="bold"
+            android:textSize="15sp"
+
+            />
+
+
+        <NumberPicker
+            android:id="@+id/temp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titletemp"
+            android:theme="@style/DefaultNumberPickerTheme"
+            android:descendantFocusability="blocksDescendants"
+
+            />
+
+
+        <TextView
+            android:id="@+id/devider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toRightOf="@+id/temp1"
+            android:text="."
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            />
+
+
+        <TextView
+            android:id="@+id/titletemp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/devider"
+            android:text="Diastolic"
+            android:textStyle="bold"
+            android:textColor="@color/gray"
+            android:textSize="15sp"
+
+            />
+
+
+        <NumberPicker
+            android:id="@+id/temp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titletemp2"
+            android:layout_toRightOf="@+id/devider"
+            android:theme="@style/DefaultNumberPickerTheme"
+            android:descendantFocusability="blocksDescendants" />
+
+
+    </RelativeLayout>
+
+
+
+    <Button
+        android:id="@+id/saveBodyTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/background_item"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_below="@id/numberPicker"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>

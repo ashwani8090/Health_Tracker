@@ -10,4 +10,6 @@
     <color name="dark_gray">#4D4C4C</color>
     <color name="gray">#636262</color>
     <color name="lighgray">#BDBABA</color>
+    <color name="transparent">#ADFFFFFF</color>
+    <color name="transparentblack">#ED525151</color>
 </resources>

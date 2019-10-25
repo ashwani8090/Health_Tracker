@@ -34,19 +34,7 @@ public class TopicsActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private void loadWebViewLoad(WebView webview) {
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        webview.getSettings().setSupportMultipleWindows(true);
-        webview.setWebViewClient(new WebViewClient());
-        webview.setWebChromeClient(new WebChromeClient());
-        webview.loadUrl(GlobalUrl);
 
-    }
-
-
-    @SuppressLint("SetJavaScriptEnabled")
     private void StartWebView(String url) {
 
         WebSettings settings = webView.getSettings();

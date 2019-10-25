@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.health_tracker">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,12 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SuggestionActivity"></activity>
+        <activity android:name=".BodyTemperatureActivity"></activity>
+        <activity android:name=".BloodPressureActivity" />
+        <activity android:name=".SuggestionActivity" />
         <activity android:name=".HealthMonthlyActivity" />
         <activity android:name=".HealthWeeklyActivity" />
         <activity android:name=".DailyStatusActivity" />
         <activity android:name=".TopicsActivity" />
-        <activity android:name=".OptionsActivity" />
+        <activity
+            android:name=".OptionsActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SplashPageActivity">

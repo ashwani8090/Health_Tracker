@@ -95,16 +95,22 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if ((firebaseAuthLogin.getCurrentUser() != null) && (firebaseAuthLogin.getCurrentUser().isEmailVerified())) {
-            startActivity(new Intent(this, OptionsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+
+            Intent intent=new Intent(LoginActivity.this, OptionsActivity.class);
+            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         }
+
+
 
         alert=new AlertDialog.Builder(this);
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),SignUpActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(getApplicationContext(),SignUpActivity.class).
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
             }
         });
@@ -241,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             progressBar.setVisibility(View.INVISIBLE);
 
-                            startActivity(new Intent(getApplicationContext(),OptionsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            startActivity(new Intent(getApplicationContext(),OptionsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                             finish();
                         }
                         catch (Exception e){

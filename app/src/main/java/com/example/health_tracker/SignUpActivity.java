@@ -50,16 +50,20 @@ public class SignUpActivity extends AppCompatActivity {
     private DatabaseReference firebaseDatabaseSignUp;
     private ProgressBar progressBar;
     private Button buttonSignUp;
-    private EditText editPhoneNumber, editEmail, editPassword, editName;
+    private EditText editEmail, editPassword, editName;
     private FirebaseAuth firebaseAuth;
-    private String Password = null, Email = null, PhoneNumber = null, Name = null;
+    private String Password = null, Email = null, Name = null;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editorEmail;
     private Spinner spinnerAge;
     private ArrayAdapter<Integer> arrayAdapter;
-    private List<Integer> ageList=new ArrayList<>();
+    private List<Integer> ageList = new ArrayList<>();
     private RadioGroup radioGroupAge;
-    private String Age,gender="male";
+    private String Age, gender = "male";
+    private String WeightDouble;
+    private String HeightInt;
+    private EditText HeightEdit, WeightEdit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,34 +75,36 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar2);
         editEmail = findViewById(R.id.signup_email);
-        editPhoneNumber = findViewById(R.id.signup_phone);
         editPassword = findViewById(R.id.signup_password);
         editName = findViewById(R.id.signup_Name);
         buttonSignUp = findViewById(R.id.signup_button);
-        spinnerAge=findViewById(R.id.spinner_age);
-        radioGroupAge=findViewById(R.id.radio_group);
+        spinnerAge = findViewById(R.id.spinner_age);
+        radioGroupAge = findViewById(R.id.radio_group);
+        HeightEdit = findViewById(R.id.height);
+        WeightEdit = findViewById(R.id.weight);
 
-        buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185   )));
+
+        buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185)));
         buttonSignUp.setTextColor(Color.parseColor("#9B9999"));
         sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
-        firebaseDatabaseSignUp= FirebaseDatabase.getInstance().getReference().child("User");
+        firebaseDatabaseSignUp = FirebaseDatabase.getInstance().getReference().child("User");
 
         findViewById(R.id.sign_up_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-             startActivity(new Intent(getApplicationContext(),LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-             finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
 
             }
         });
 
-     //spinner for age
-       ageList.clear();
-       for(int i=1;i<=99;i++){
-           ageList.add(i);
-       }
+        //spinner for age
+        ageList.clear();
+        for (int i = 1; i <= 99; i++) {
+            ageList.add(i);
+        }
 
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ageList);
 
@@ -124,52 +130,17 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-         //gender
+        //gender
 
         radioGroupAge.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 if (checkedId == findViewById(R.id.radio_male).getId()) {
-                    gender="male";
+                    gender = "male";
                 } else {
                     gender = "female";
                 }
-            }
-        });
-
-
-
-
-
-
-        editPhoneNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                PhoneNumber = String.valueOf(s).trim();
-                if(PhoneNumber.length()==10){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        editPhoneNumber.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(49,196,17)));
-                    }
-                }
-                else {
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        editPhoneNumber.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(255,255,255)));
-                    }
-                }
-
-                Validate(PhoneNumber, Email, Name, Password);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -195,25 +166,22 @@ public class SignUpActivity extends AppCompatActivity {
                 Matcher matcher = pattern.matcher(Email);
 
 
-
-
-                if(matcher.matches()){
+                if (matcher.matches()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        editEmail.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(49,196,17)));
+                        editEmail.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(49, 196, 17)));
+                    }
+
+
+                } else {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        editEmail.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(255, 255, 255)));
                     }
 
 
                 }
-                else {
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        editEmail.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(255,255,255)));
-                    }
-
-
-                }
-
-                Validate(PhoneNumber, Email, Name, Password);
+                Validate(Email, Name, Password, HeightInt, WeightDouble);
 
 
             }
@@ -237,22 +205,21 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 Name = String.valueOf(s).trim();
-                if(!Name.isEmpty()){
+                if (!Name.isEmpty()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        editName.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(49,196,17)));
+                        editName.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(49, 196, 17)));
+                    }
+
+
+                } else {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        editName.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(255, 255, 255)));
                     }
 
 
                 }
-                else {
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        editName.setCompoundDrawableTintList(ColorStateList.valueOf(Color.rgb(255,255,255)));
-                    }
-
-
-                }
-                Validate(PhoneNumber, Email, Name, Password);
+                Validate(Email, Name, Password, HeightInt, WeightDouble);
 
             }
 
@@ -274,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 Password = String.valueOf(s).trim();
-                Validate(PhoneNumber, Email, Name, Password);
+                Validate(Email, Name, Password, HeightInt, WeightDouble);
             }
 
             @Override
@@ -282,6 +249,49 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+
+
+        HeightEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    HeightInt = String.valueOf(s).trim();
+
+                Validate(Email, Name, Password, HeightInt, WeightDouble);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        WeightEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                WeightDouble = String.valueOf(s).trim();
+
+                Validate(Email, Name, Password, HeightInt, WeightDouble);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,14 +306,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void CreateAccount(String email, String password) {
+    private void CreateAccount(final String email, String password) {
 
-        Email=email;
-        Password=password;
+        Email = email;
+        Password = password;
 
 
         editorEmail = sharedPreferences.edit();
-        editorEmail.putString("email",Email).apply();
+        editorEmail.putString("email", Email).apply();
 
 
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -315,25 +325,25 @@ public class SignUpActivity extends AppCompatActivity {
                     firebaseAuth.getCurrentUser().sendEmailVerification();
                     //firebase username
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(""+Name).build();
-                     firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
+                            .setDisplayName("" + Name).build();
+                    firebaseAuth.getCurrentUser().updateProfile(profileUpdates);
 
-                     setterSignup=new Getter_setter_Signup(PhoneNumber,Name,gender,Age);
+                    setterSignup = new Getter_setter_Signup(email, Name, gender, Age, HeightInt, WeightDouble);
                     firebaseDatabaseSignUp.setValue(setterSignup).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             progressBar.setVisibility(View.INVISIBLE);
                             alert.setMessage("Verify link sent to your email").
                                     setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    alert.setCancelable(true);
-                                    startActivity(new Intent(getApplicationContext(),LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                                    finish();
-                                    firebaseAuth.signOut();
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            alert.setCancelable(true);
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                            finish();
+                                            firebaseAuth.signOut();
 
-                                }
-                            }).show();
+                                        }
+                                    }).show();
                         }
                     });
                 }
@@ -350,7 +360,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void Validate(String phoneNumber, String email, String name, String password) {
+    private void Validate(String email, String name, String password, String heightInt, String weightDouble) {
 
         try {
 
@@ -363,19 +373,17 @@ public class SignUpActivity extends AppCompatActivity {
 
             Matcher matcher = pattern.matcher(Email);
 
-            if ((name.isEmpty()) || (!matcher.matches()) ||
-                    (phoneNumber.length() != 10) || (password.length() < 7)) {
+            if ((name.isEmpty()) || (!matcher.matches()) || (password.length() < 7) || (heightInt.isEmpty()) || (weightDouble.isEmpty())) {
 
 
                 buttonSignUp.setEnabled(false);
-                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185  )));
+                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(171, 178, 185)));
                 buttonSignUp.setTextColor(Color.parseColor("#9B9999"));
-
 
 
             } else {
                 buttonSignUp.setEnabled(true);
-                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(86, 101, 115  )));
+                buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(86, 101, 115)));
                 buttonSignUp.setTextColor(Color.BLACK);
 
             }

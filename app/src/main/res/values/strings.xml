@@ -8,4 +8,8 @@
     <string name="don_t_have_account">Don\'t have account ?</string>
     <string name="logout">Logout</string>
     <string name="trending_topic">Trending Topic</string>
+    <string name="gram">Gram</string>
+    <string name="centimeter">Centimeter</string>
+    <string name="height">Height</string>
+    <string name="profile">Profile</string>
 </resources>

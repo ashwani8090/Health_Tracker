@@ -93,6 +93,11 @@
         </RelativeLayout>
     </ScrollView>
 
+    <FrameLayout
+        android:id="@+id/frameBlurred"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#02FFFFFF">
 
     <com.github.clans.fab.FloatingActionMenu
         xmlns:fab="http://schemas.android.com/apk/res-auto"
@@ -138,16 +143,16 @@
         fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item1"
+            android:id="@+id/blood_pressure_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_blood_pressure"
+            android:src="@drawable/ic_blood_pressure"
             fab:fab_label="Blood Pressure"
             fab:backgroundTint="@color/lighgray"
             fab:menu_labels_colorNormal="#333333"
             fab:menu_labels_colorPressed="#444444"
             fab:fab_colorNormal="@color/lighgray"
-            fab:fab_size="mini"
+            fab:fab_size="normal"
 
 
 
@@ -164,12 +169,12 @@
             />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item2"
+            android:id="@+id/sugar_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_sugar"
+            android:src="@drawable/ic_sugar"
             fab:fab_label="Sugar"
-            fab:fab_size="mini"
+            fab:fab_size="normal"
 
             fab:menu_labels_textColor="#0A0A0A"
             fab:backgroundTint="@color/lighgray"
@@ -178,13 +183,12 @@
             fab:fab_colorNormal="@color/lighgray"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item3"
+            android:id="@+id/calories_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_calories"
             fab:fab_label="Calories"
-            fab:fab_size="mini"
-
+            fab:fab_size="normal"
             fab:menu_labels_textColor="#0A0A0A"
             fab:backgroundTint="@color/lighgray"
             fab:menu_labels_colorNormal="#333333"
@@ -192,7 +196,32 @@
             fab:fab_colorNormal="@color/lighgray"
             />
 
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/temperature_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_temperature"
+            fab:fab_label="Temperature"
+            fab:fab_size="normal"
+            fab:menu_labels_textColor="#0A0A0A"
+            fab:backgroundTint="@color/lighgray"
+            fab:menu_labels_colorNormal="#333333"
+            fab:menu_labels_colorPressed="#444444"
+            fab:fab_colorNormal="@color/lighgray"
+            />
+
+
     </com.github.clans.fab.FloatingActionMenu>
+
+
+
+</FrameLayout>
+
+    <include layout="@layout/bottomsheet_profile"
+        />
+
 
 
 </android.support.design.widget.CoordinatorLayout>

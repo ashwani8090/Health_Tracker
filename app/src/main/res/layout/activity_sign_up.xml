@@ -53,7 +53,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+           >
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/signup_phone"
@@ -64,9 +64,10 @@
                 android:layout_marginBottom="10dp"
                 android:drawableEnd="@drawable/icon_check"
                 android:drawableTint="#27FFFFFF"
-                android:hint="Phone Number"
-                android:inputType="number"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:maxLength="10"
+                android:visibility="gone"
                 android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -180,6 +181,58 @@
             android:layout_marginStart="10dp">
 
         </Spinner>
+
+
+        <TextView
+            android:id="@+id/weight_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"/>
+
+        <EditText
+            android:id="@+id/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C4C2C2"
+            android:layout_marginTop="2dp"
+            android:dropDownWidth="50dp"
+            android:hint="Kilogram"
+            android:inputType="textNoSuggestions|number"
+            android:layout_marginStart="10dp">
+
+        </EditText>
+
+
+        <TextView
+            android:id="@+id/height_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Height"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"/>
+
+        <EditText
+            android:id="@+id/height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C4C2C2"
+            android:layout_marginTop="2dp"
+            android:dropDownWidth="50dp"
+            android:hint="Centimeter"
+            android:inputType="number|textNoSuggestions"
+            android:layout_marginStart="10dp">
+
+        </EditText>
+
+
+
+
+
+
 
 
         <Button
