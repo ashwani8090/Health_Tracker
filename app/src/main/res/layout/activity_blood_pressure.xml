@@ -52,7 +52,7 @@
 
 
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/systolicEdit"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:background="@drawable/backgound_stoke"/>
 
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/diastolicEdit"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
@@ -74,7 +74,6 @@
             android:layout_marginTop="10dp"
             android:layout_below="@+id/diastolicTitle"
             android:inputType="number|textNoSuggestions"
-
             android:layout_alignStart="@+id/diastolicTitle"/>
 
 
