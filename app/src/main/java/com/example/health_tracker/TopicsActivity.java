@@ -11,18 +11,21 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class TopicsActivity extends AppCompatActivity {
 
     public final String GlobalUrl = "https://www.medicalnewstoday.com/popular/";
     private WebView webView;
+    private ProgressBar progressBarWeb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics);
         webView = findViewById(R.id.webview);
+        progressBarWeb=findViewById(R.id.progressBar_web);
 
 
         try {
@@ -62,10 +65,13 @@ public class TopicsActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
+                progressBarWeb.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                progressBarWeb.setVisibility(View.INVISIBLE);
                 Toast.makeText(TopicsActivity.this, "Error:" + description, Toast.LENGTH_SHORT).show();
 
             }
