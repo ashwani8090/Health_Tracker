@@ -56,7 +56,7 @@ public class OptionsActivity extends AppCompatActivity {
     private TextView TextViewUsername, logout, profileDescription,profile;
     private com.github.clans.fab.FloatingActionMenu fabMenu;
     private FrameLayout frameLayoutFabMenu;
-    private com.github.clans.fab.FloatingActionButton bloodPressureFab;
+    private com.github.clans.fab.FloatingActionButton bloodPressureFab,temperatureFab,waterFab,sugarFab;
     private BottomSheetBehavior bottomSheetBehaviorUpdate;
     private CardView cardViewUpdate;
     private EditText HeightEdit,WeightEdit,AgeEdit;
@@ -78,6 +78,7 @@ public class OptionsActivity extends AppCompatActivity {
         fabMenu = findViewById(R.id.menu);
         frameLayoutFabMenu = findViewById(R.id.frameBlurred);
         bloodPressureFab = findViewById(R.id.blood_pressure_fab);
+        temperatureFab=findViewById(R.id.temperature_fab);
         cardViewUpdate = findViewById(R.id.cardUpdate);
         bottomSheetBehaviorUpdate = BottomSheetBehavior.from(cardViewUpdate);
         profileDescription=findViewById(R.id.profileDescription);
@@ -85,6 +86,8 @@ public class OptionsActivity extends AppCompatActivity {
         bottomSheetBackButton=findViewById(R.id.bottomSheetBack);
         HeightEdit=findViewById(R.id.profileHeight);
         AgeEdit=findViewById(R.id.profileAge);
+        sugarFab=findViewById(R.id.sugar_fab);
+        waterFab=findViewById(R.id.water_fab);
         WeightEdit=findViewById(R.id.profileWeight);
         updateProfile=findViewById(R.id.updateProfile);
 
@@ -159,6 +162,35 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
+        temperatureFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OptionsActivity.this, BodyTemperatureActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+            }
+        });
+
+
+
+
+        waterFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OptionsActivity.this, WaterIntakeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+            }
+        });
+
+
+        sugarFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OptionsActivity.this, SugarActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+            }
+        });
+
+
 
         findViewById(R.id.user_edit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,9 +221,6 @@ public class OptionsActivity extends AppCompatActivity {
         updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
 
                 firebaseProfile.child("height").setValue(HeightEdit.getText().toString());
                 firebaseProfile.child("weight").setValue(WeightEdit.getText().toString());

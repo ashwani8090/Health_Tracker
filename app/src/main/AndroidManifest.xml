@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BodyTemperatureActivity"></activity>
+        <activity android:name=".WaterIntakeActivity"></activity>
+        <activity android:name=".SugarActivity" />
+        <activity android:name=".BodyTemperatureActivity" />
         <activity android:name=".BloodPressureActivity" />
         <activity android:name=".SuggestionActivity" />
         <activity android:name=".HealthMonthlyActivity" />

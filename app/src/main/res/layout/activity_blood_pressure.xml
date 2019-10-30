@@ -17,6 +17,9 @@
         android:text="Add Blood Pressure"
         android:textColor="@color/dark_gray"
         android:textSize="25sp"
+        android:drawableEnd="@drawable/ic_blood_pressure"
+        android:paddingEnd="80dp"
+        android:drawableTint="@color/colorPrimary"
         android:background="@drawable/background_item"
         android:textStyle="bold" />
 
@@ -30,70 +33,52 @@
 
 
         <TextView
-            android:id="@+id/titleSystolic"
+            android:id="@+id/systolicTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
             android:text="Systolic"
-            android:textColor="@color/gray"
-            android:textStyle="bold"
-            android:textSize="15sp"
-
-            />
-
-
-        <NumberPicker
-            android:id="@+id/Systolic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titleSystolic"
-            android:theme="@style/DefaultNumberPickerTheme"
-            android:descendantFocusability="blocksDescendants"
-
-            />
-
+            android:textColor="@color/dark_gray"
+            android:textSize="15sp"/>
 
         <TextView
-            android:id="@+id/devider"
+            android:id="@+id/diastolicTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toRightOf="@+id/Systolic"
-            android:text="/"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            />
-
-
-        <TextView
-            android:id="@+id/titleDiastolic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toRightOf="@+id/devider"
             android:text="Diastolic"
-            android:textStyle="bold"
-            android:textColor="@color/gray"
             android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/dark_gray"
+            android:layout_toRightOf="@+id/systolicEdit"/>
 
-            />
 
 
-        <NumberPicker
-            android:id="@+id/Diastolic"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/systolicEdit"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/titleDiastolic"
-            android:layout_toRightOf="@+id/devider"
-            android:theme="@style/DefaultNumberPickerTheme"
-            android:descendantFocusability="blocksDescendants" />
+            android:layout_below="@+id/systolicTitle"
+            android:padding="5dp"
+            android:hint="0"
+            android:layout_marginTop="10dp"
+            android:inputType="number|textNoSuggestions"
+            android:background="@drawable/backgound_stoke"/>
+
+
+        <EditText
+            android:id="@+id/diastolicEdit"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/backgound_stoke"
+            android:padding="5dp"
+            android:hint="0"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/diastolicTitle"
+            android:inputType="number|textNoSuggestions"
+
+            android:layout_alignStart="@+id/diastolicTitle"/>
+
+
+
 
 
     </RelativeLayout>

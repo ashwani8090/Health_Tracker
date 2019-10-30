@@ -175,7 +175,6 @@
             android:src="@drawable/ic_sugar"
             fab:fab_label="Sugar"
             fab:fab_size="normal"
-
             fab:menu_labels_textColor="#0A0A0A"
             fab:backgroundTint="@color/lighgray"
             fab:menu_labels_colorNormal="#333333"
@@ -183,11 +182,11 @@
             fab:fab_colorNormal="@color/lighgray"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/calories_fab"
+            android:id="@+id/water_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_calories"
-            fab:fab_label="Calories"
+            android:src="@drawable/ic_water_intake"
+            fab:fab_label="Water Intake"
             fab:fab_size="normal"
             fab:menu_labels_textColor="#0A0A0A"
             fab:backgroundTint="@color/lighgray"
