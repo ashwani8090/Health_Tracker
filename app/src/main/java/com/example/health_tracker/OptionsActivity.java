@@ -1,5 +1,6 @@
 package com.example.health_tracker;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -44,6 +46,8 @@ import java.util.Objects;
 
 public class OptionsActivity extends AppCompatActivity {
 
+    private Dialog dialog;
+    private LinearLayout linearLayoutPopUp;
     int c = 0;
     private Getter_setter_Signup getterSetterSignup;
     private PopupMenu popupMenu;
@@ -90,7 +94,6 @@ public class OptionsActivity extends AppCompatActivity {
         waterFab=findViewById(R.id.water_fab);
         WeightEdit=findViewById(R.id.profileWeight);
         updateProfile=findViewById(R.id.updateProfile);
-
 
 
         sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);

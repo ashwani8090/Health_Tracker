@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_input"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/close_popup"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="X"
+        android:textSize="20sp"
+        android:background="@drawable/oval_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_gravity="end"
+        />
+
+
+
+    <RelativeLayout
+        android:id="@+id/bloodPressureRelative"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/backgound_stoke"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/bloodPressure_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_bloodPresure"
+            android:fontFamily="casual"
+            android:text="BLOOD PRESSURE"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bloodPressure_popup"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_bloodPresure"
+            android:text="Add blood pressure on daily bases"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/image_bloodPresure"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/oval_background"
+            android:drawableEnd="@drawable/ic_blood_pressure"
+            android:gravity="center"
+            android:drawableTint="@color/white"
+            android:paddingEnd="10dp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/waterRelative"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/backgound_stoke"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/water_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_water"
+            android:fontFamily="casual"
+            android:text="WATER INTAKE"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/water_popup"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_water"
+            android:text="Regularly water taken"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/image_water"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/oval_background"
+            android:drawableEnd="@drawable/ic_water"
+            android:gravity="center"
+            android:drawableTint="@color/white"
+            android:paddingEnd="10dp" /> />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sugarRelative"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/backgound_stoke"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/sugar_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_sugar"
+            android:fontFamily="casual"
+            android:text="SUGAR LEVEL"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sugar_popup"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_sugar"
+            android:text="Add sugar level from your device"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/image_sugar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/oval_background"
+            android:drawableEnd="@drawable/ic_sugar"
+            android:gravity="center"
+            android:drawableTint="@color/white"
+            android:paddingEnd="10dp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/temperatureRelative"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/backgound_stoke"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/temperature_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_temperature"
+            android:fontFamily="casual"
+            android:text="Temperature"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temperature_popup"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@+id/image_temperature"
+            android:text="Temperature from your thermometer"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/image_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/oval_background"
+            android:drawableEnd="@drawable/icon_temperature"
+            android:gravity="center"
+            android:drawableTint="@color/white"
+            android:paddingEnd="15dp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

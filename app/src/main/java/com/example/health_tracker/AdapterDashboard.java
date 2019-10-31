@@ -1,6 +1,7 @@
 package com.example.health_tracker;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,10 +22,12 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.View
     private Context context;
     private DataModel dataModel;
     private List<DataModel> dataModelList=new ArrayList<>();
+    private Dialog dialog;
 
     public AdapterDashboard(Context context, List<DataModel> dataModelList) {
         this.context = context;
         this.dataModelList = dataModelList;
+
     }
 
     @NonNull
@@ -45,7 +48,8 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.View
     public void onBindViewHolder(@NonNull final ViewHolderDashboard viewHolderDashboard, int i) {
 
         dataModel=dataModelList.get(i);
-
+        dialog=new Dialog(context);
+        dialog.setContentView(R.layout.popup_input_layout);
         viewHolderDashboard.imageDashboard.setCompoundDrawablesWithIntrinsicBounds(dataModel.getImage(), 0, 0, 0);
         viewHolderDashboard.textViewText.setText(dataModel.getName());
 
@@ -55,7 +59,7 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.View
                 if(viewHolderDashboard.getAdapterPosition()==0){
                     context.startActivity(new Intent(context,TopicsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }else if(viewHolderDashboard.getAdapterPosition()==1){
-                  //  context.startActivity(new Intent(context,TopicsActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    dialog.show();
                 }else if(viewHolderDashboard.getAdapterPosition()==2){
                     context.startActivity(new Intent(context,DailyStatusActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }else if(viewHolderDashboard.getAdapterPosition()==3){
@@ -70,6 +74,48 @@ public class AdapterDashboard extends RecyclerView.Adapter<AdapterDashboard.View
         });
 
 
+        dialog.findViewById(R.id.bloodPressureRelative).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context,BloodPressureActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+
+            }
+        });
+        dialog.findViewById(R.id.sugarRelative).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context,SugarActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+
+            }
+        });
+        dialog.findViewById(R.id.temperatureRelative).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context,BodyTemperatureActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+
+            }
+        });
+
+
+        dialog.findViewById(R.id.waterRelative).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context,WaterIntakeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+
+            }
+        });
+
+
+        dialog.findViewById(R.id.close_popup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
