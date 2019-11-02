@@ -1,69 +1,186 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_daily"
+    android:id="@+id/sliding_pane_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DailyStatusActivity">
+    android:paddingStart="10dp"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/backDaily"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/oval_background"
+        android:backgroundTint="@color/transparentblack"
+        android:drawableStart="@drawable/ic_back"
+        android:drawableTint="@color/white"
+        android:gravity="center"
+        android:paddingStart="10dp" />
 
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigationDaily"
-        android:layout_width="65dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:background="@color/transparent">
+    <TextView
+        android:id="@+id/bpDailyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backDaily"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Blood Pressure on"
+        android:textSize="20sp"
 
+        android:textStyle="bold" />
 
-        <include layout="@layout/navigation_layout" />
+    <TextView
+        android:id="@+id/dateDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bpDailyTitle"
+        android:layout_marginStart="10dp"
+        android:text="24 October 2019"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-    </android.support.design.widget.NavigationView>
 
     <RelativeLayout
+        android:id="@+id/relativeDaily"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateDaily"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
 
         <TextView
-            android:id="@+id/hamburger_daily"
+            android:id="@+id/bpDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:onClick="chartShow"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:text="Blood Pressure"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/waterDaily"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/oval_background"
-            android:backgroundTint="@color/gray"
-            android:drawableEnd="@drawable/ic_menu_black_24dp"
-            android:drawableTint="@color/white"
-            android:paddingEnd="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/bpDaily"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartShow"
+            android:padding="10dp"
+            android:text="Water Taken"
+            android:textStyle="bold"
 
-            android:textStyle="bold" />
-
+            android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/menu_item_daily"
+            android:id="@+id/tempDaily"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/hamburger_daily"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Blood Pressure on"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:layout_below="@+id/bpDaily"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartShow"
+            android:padding="10dp"
             android:textStyle="bold"
+
+            android:text="Temperature"
+            android:textSize="10sp"
 
             />
 
         <TextView
-            android:id="@+id/date_today"
+            android:id="@+id/sugarDaily"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/menu_item_daily"
-            android:layout_marginStart="20dp"
-            android:text="31st October 2019" />
+            android:layout_below="@+id/waterDaily"
+            android:layout_alignStart="@+id/waterDaily"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartShow"
+            android:padding="10dp"
+            android:textStyle="bold"
+
+            android:text="Sugar Level"
+            android:textSize="10sp"
+
+            />
 
 
     </RelativeLayout>
 
 
-</android.support.v4.widget.DrawerLayout>
+  <!--  <com.txusballesteros.widgets.FitChart
+        android:id="@+id/fitChart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/relativeDaily"
+        app:strokeSize="10dp"
+        app:valueStrokeColor="#009688"
+        app:backStrokeColor="#B6B2B6"
+        app:animationMode="overdraw"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="900dp"/>-->
+
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

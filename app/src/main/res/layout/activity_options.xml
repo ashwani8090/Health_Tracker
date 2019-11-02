@@ -43,7 +43,6 @@
                 android:background="@drawable/oval_background"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
-                android:focusableInTouchMode="true"
                 android:paddingEnd="12sp"
                 />
 
