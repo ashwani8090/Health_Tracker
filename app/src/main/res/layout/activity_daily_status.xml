@@ -57,9 +57,9 @@
             android:background="@drawable/chooserbackground"
             android:onClick="chartShow"
             android:padding="10dp"
-            android:textStyle="bold"
             android:text="Blood Pressure"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/waterDaily"
@@ -74,9 +74,9 @@
             android:onClick="chartShow"
             android:padding="10dp"
             android:text="Water Taken"
-            android:textStyle="bold"
+            android:textSize="10sp"
 
-            android:textSize="10sp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tempDaily"
@@ -89,10 +89,10 @@
             android:focusable="true"
             android:onClick="chartShow"
             android:padding="10dp"
-            android:textStyle="bold"
-
             android:text="Temperature"
+
             android:textSize="10sp"
+            android:textStyle="bold"
 
             />
 
@@ -108,10 +108,10 @@
             android:focusable="true"
             android:onClick="chartShow"
             android:padding="10dp"
-            android:textStyle="bold"
-
             android:text="Sugar Level"
+
             android:textSize="10sp"
+            android:textStyle="bold"
 
             />
 
@@ -119,19 +119,16 @@
     </RelativeLayout>
 
 
-  <!--  <com.txusballesteros.widgets.FitChart
-        android:id="@+id/fitChart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/relativeDaily"
-        app:strokeSize="10dp"
-        app:valueStrokeColor="#009688"
-        app:backStrokeColor="#B6B2B6"
-        app:animationMode="overdraw"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="900dp"/>-->
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/chart"
 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeDaily"
+        android:layout_margin="10dp"
+
+
+        />
 
 
 </RelativeLayout>
