@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartFormat;
+import com.anychart.AnyChartView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,18 +21,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -38,6 +38,7 @@ public class DailyStatusActivity extends AppCompatActivity {
 
 
     private Date firstDate,lastDate;
+    private AnyChartView anyChart;
     private int index = 0;
     private TextView BP, Sugar, WaterTaken, Temp, MainTitle, dateDaily;
     private GraphView chart;
@@ -45,7 +46,7 @@ public class DailyStatusActivity extends AppCompatActivity {
     private String firebaseAuth;
     private PointsGraphSeries<DataPoint> pointsGraphSeries;
     private DataPoint[] dataPoints;
-    private SimpleDateFormat sdf = new SimpleDateFormat("HH:MM");
+    private SimpleDateFormat sdf = new SimpleDateFormat("HH");
     private Map<Date, Integer> dateIntegerMap = new TreeMap<>();
 
 
@@ -61,6 +62,8 @@ public class DailyStatusActivity extends AppCompatActivity {
         MainTitle = findViewById(R.id.bpDailyTitle);
         dateDaily = findViewById(R.id.dateDaily);
         chart = findViewById(R.id.chart);
+        anyChart = findViewById(R.id.anychartDaily);
+
 
 
         pointsGraphSeries = new PointsGraphSeries<>();
@@ -68,7 +71,10 @@ public class DailyStatusActivity extends AppCompatActivity {
         chart.addSeries(pointsGraphSeries);
         chart.setCursorMode(true);
 
-        chart.getGridLabelRenderer().setTextSize(15);
+
+
+
+
 
 
 

@@ -7,4 +7,121 @@
     android:layout_height="match_parent"
     tools:context=".HealthWeeklyActivity">
 
+
+    <TextView
+        android:id="@+id/backWeek"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/oval_background"
+        android:backgroundTint="@color/transparentblack"
+        android:drawableStart="@drawable/ic_back"
+        android:drawableTint="@color/white"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:paddingStart="10dp" />
+    <TextView
+        android:id="@+id/bpDailyWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backWeek"
+        android:text="Blood Pressure"
+        android:layout_marginStart="20sp"
+        android:textSize="20sp"
+
+        android:textStyle="bold" />
+    <RelativeLayout
+        android:id="@+id/relativeWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bpDailyWeek"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/bpWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:onClick="chartShowWeek"
+            android:padding="10dp"
+            android:text="Blood Pressure"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/waterWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/bpWeek"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartShowWeek"
+            android:padding="10dp"
+            android:text="Water Taken"
+            android:textSize="10sp"
+
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tempWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bpWeek"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartShowWeek"
+            android:padding="10dp"
+            android:text="Temperature"
+
+            android:textSize="10sp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/sugarWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/waterWeek"
+            android:layout_alignStart="@+id/waterWeek"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartShowWeek"
+            android:padding="10dp"
+            android:text="Sugar Level"
+            android:textSize="10sp"
+            android:textStyle="bold"
+
+
+            />
+
+
+    </RelativeLayout>
+
+
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/chartWeek"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeWeek"
+            android:layout_margin="10dp"
+
+
+            />
+
+
+
+
+
+
+
 </RelativeLayout>

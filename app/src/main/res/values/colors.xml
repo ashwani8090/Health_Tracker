@@ -11,5 +11,6 @@
     <color name="gray">#636262</color>
     <color name="lighgray">#BDBABA</color>
     <color name="transparent">#ADFFFFFF</color>
+    <color name="newbackground">#566573</color>
     <color name="transparentblack">#ED525151</color>
 </resources>
