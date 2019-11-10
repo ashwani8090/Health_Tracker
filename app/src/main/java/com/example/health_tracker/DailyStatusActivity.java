@@ -27,8 +27,10 @@ import com.txusballesteros.widgets.FitChartValue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -47,6 +49,7 @@ public class DailyStatusActivity extends AppCompatActivity {
     private FitChart fitChartDia, fitChartSys, fitValue;
     private RelativeLayout fitRelative;
     private LinearLayout fitLinear;
+
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -218,6 +221,11 @@ public class DailyStatusActivity extends AppCompatActivity {
         fitLinear.setVisibility(View.VISIBLE);
         fitValue.setMinValue(50);
         fitValue.setMaxValue(400);
+        List<FitChartValue> values = new ArrayList<>();
+        values.add(new FitChartValue(0f,
+                ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
+        fitValue.setValues(values);
+
         firebaseDatabase.child("Sugar").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -253,6 +261,11 @@ public class DailyStatusActivity extends AppCompatActivity {
         fitLinear.setVisibility(View.VISIBLE);
         fitValue.setMinValue(0);
         fitValue.setMaxValue(10);
+        List<FitChartValue> values = new ArrayList<>();
+        values.add(new FitChartValue(0f,
+                ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
+        fitValue.setValues(values);
+
         firebaseDatabase.child("Water").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -264,7 +277,10 @@ public class DailyStatusActivity extends AppCompatActivity {
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if (time.equals(formatter.format(new Date().getTime()))) {
-                            fitValue.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
+                            List<FitChartValue> values = new ArrayList<>();
+                            values.add(new FitChartValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()),
+                                    ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
+                            fitValue.setValues(values);
                             valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+" Litre");
 
                         }
@@ -287,6 +303,11 @@ public class DailyStatusActivity extends AppCompatActivity {
         fitLinear.setVisibility(View.VISIBLE);
         fitValue.setMinValue(0);
         fitValue.setMaxValue(130);
+        List<FitChartValue> values = new ArrayList<>();
+        values.add(new FitChartValue(0f,
+                ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
+        fitValue.setValues(values);
+
         firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -298,9 +319,12 @@ public class DailyStatusActivity extends AppCompatActivity {
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if (time.equals(formatter.format(new Date().getTime()))) {
-                            fitValue.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
-
                             valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+"ºC");
+                            List<FitChartValue> values = new ArrayList<>();
+                            values.add(new FitChartValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()),
+                                    ContextCompat.getColor(getApplicationContext(), R.color.darkred)));
+                            fitValue.setValues(values);
+
 
                         }
                     } catch (ParseException e) {

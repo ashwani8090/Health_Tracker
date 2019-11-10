@@ -7,4 +7,203 @@
     android:paddingTop="10dp">
 
 
+
+    <TextView
+        android:id="@+id/backMonthly"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/oval_background"
+        android:backgroundTint="@color/transparentblack"
+        android:drawableStart="@drawable/ic_back"
+        android:drawableTint="@color/white"
+        android:gravity="center"
+        android:paddingStart="10dp" />
+
+    <TextView
+        android:id="@+id/bpMonthlyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backMonthly"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Blood Pressure"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeMonthly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bpMonthlyTitle"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/bpMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:onClick="chartMonth"
+            android:padding="10dp"
+            android:text="Blood Pressure"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/waterMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/bpMonth"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartMonth"
+            android:padding="10dp"
+            android:text="Water Taken"
+            android:textSize="10sp"
+
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tempMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bpMonth"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartMonth"
+            android:padding="10dp"
+            android:text="Temperature"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/sugarMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/waterMonth"
+            android:layout_alignStart="@+id/waterMonth"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/chooserbackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="chartMonth"
+            android:padding="10dp"
+            android:text="Sugar Level"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/calender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeMonthly"
+        android:text="Choose Month"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:backgroundTint="#2196F3"
+        android:textColor="@color/white"
+        android:background="@drawable/backgound_stoke"/>
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/calender">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:id="@+id/colorIndex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chartMonth"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/systolicColor"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/oval_background"
+                android:backgroundTint="@color/black"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/systolicColor"
+                android:text="Systolic"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                />
+
+            <TextView
+                android:id="@+id/diastolicColor"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_below="@+id/systolicColor"
+                android:background="@drawable/oval_background"
+                android:backgroundTint="#3F51B5"
+
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/systolicColor"
+                android:layout_below="@+id/systolicColor"
+                android:text="Diastolic"
+                android:textStyle="bold"
+                android:textColor="#3F51B5"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                />
+
+            </RelativeLayout>
+
+
+
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/chartMonth"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_below="@+id/selectedDate"
+                />
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+    </ScrollView>
+
+
+
+
+
 </RelativeLayout>

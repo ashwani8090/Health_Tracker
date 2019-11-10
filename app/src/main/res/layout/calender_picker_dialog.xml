@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="50dp"
+    >
+
+
+    <Spinner
+        android:id="@+id/monthCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/spinnerdesign"
+        />
+
+
+    <Spinner
+        android:id="@+id/yearCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/monthCalender"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/spinnerdesign"
+        android:layout_marginStart="10dp"
+
+        />
+
+
+    <Button
+        android:id="@+id/closeCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/backgound_stoke"
+        android:paddingStart="10dp"
+        android:text="Search"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/darkred"
+        android:layout_toRightOf="@+id/yearCalender"
+        android:layout_marginStart="10dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
+        android:paddingEnd="2dp"
+        android:drawableEnd="@drawable/ic_search_black_24dp"
+
+
+       />
+
+</RelativeLayout>

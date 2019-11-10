@@ -108,17 +108,88 @@
 
 
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/chartWeek"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeWeek"
-            android:layout_margin="10dp"
 
 
-            />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeWeek">
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:id="@+id/colorIndexWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chartWeek"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/systolicColor"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/oval_background"
+                    android:backgroundTint="@color/black"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/systolicColor"
+                    android:text="Systolic"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/diastolicColor"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_below="@+id/systolicColor"
+                    android:background="@drawable/oval_background"
+                    android:backgroundTint="#3F51B5"
+
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/systolicColor"
+                    android:layout_below="@+id/systolicColor"
+                    android:text="Diastolic"
+                    android:textStyle="bold"
+                    android:textColor="#3F51B5"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dp"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/chartWeek"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_below="@+id/selectedDate"
+                />
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+    </ScrollView>
 
 
 

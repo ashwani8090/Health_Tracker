@@ -1,13 +1,12 @@
 package com.example.health_tracker;
 
 import android.annotation.SuppressLint;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.text.DateFormat;
@@ -44,7 +41,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
     private SimpleDateFormat sdf = new SimpleDateFormat("HH");
     private Map<Integer, Integer> dateIntegerMapSys = new TreeMap<>();
     private Map<Integer, Integer> dateIntegerMapDia = new TreeMap<>();
-
+    private RelativeLayout colorIndex;
     private GraphView chart;
     private List<String> dateOfWeek = new ArrayList<>();
     private Integer index1 = 0, index2 = 0;
@@ -61,6 +58,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         Temp = findViewById(R.id.tempWeek);
         MainTitle = findViewById(R.id.bpDailyWeek);
         chart = findViewById(R.id.chartWeek);
+        colorIndex=findViewById(R.id.colorIndexWeek);
 
         dateOfWeek.clear();
 
@@ -87,7 +85,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         Temp.setTextColor(Color.BLACK);
 
 
-
         //backbutton
         findViewById(R.id.backWeek).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,12 +106,11 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
         pointsGraphSeries.setShape(PointsGraphSeries.Shape.TRIANGLE);
         pointsGraphSeries2.setShape(PointsGraphSeries.Shape.RECTANGLE);
-      //  StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(chart);
-       // staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6"});
-      //  chart.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-       // chart.getGridLabelRenderer().setLabelsSpace(5);
+        //  StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(chart);
+        // staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6"});
+        //  chart.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        // chart.getGridLabelRenderer().setLabelsSpace(5);
         chart.getGridLabelRenderer().setPadding(50);
-        chart.getViewport().setBackgroundColor(Color.GRAY);
         chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
         chart.getGridLabelRenderer().setHorizontalAxisTitle("WEEK DAYS");
         chart.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.RED);
@@ -122,8 +118,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         chart.getViewport().setDrawBorder(true);
         chart.getViewport().setBorderColor(Color.BLACK);
         chart.getCursorMode().setBackgroundColor(Color.WHITE);
-
-
 
 
         chart.getGridLabelRenderer().setHighlightZeroLines(false);
@@ -156,6 +150,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 WaterTaken.setTextColor(Color.BLACK);
                 Temp.setTextColor(Color.BLACK);
                 MainTitle.setText("Blood Pressure");
+                colorIndex.setVisibility(View.VISIBLE);
 
                 BloodPressure();
 
@@ -172,6 +167,8 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 WaterTaken.setTextColor(Color.BLACK);
                 Temp.setTextColor(Color.BLACK);
                 MainTitle.setText("Sugar Level");
+                colorIndex.setVisibility(View.GONE);
+
 
                 Sugar();
 
@@ -187,6 +184,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 Sugar.setTextColor(Color.BLACK);
                 WaterTaken.setTextColor(Color.WHITE);
                 Temp.setTextColor(Color.BLACK);
+                colorIndex.setVisibility(View.GONE);
 
                 MainTitle.setText("Water Taken ");
                 WaterTaken();
@@ -202,6 +200,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 Sugar.setTextColor(Color.BLACK);
                 WaterTaken.setTextColor(Color.BLACK);
                 Temp.setTextColor(Color.WHITE);
+                colorIndex.setVisibility(View.GONE);
 
                 MainTitle.setText("Temperature Change ");
 
@@ -224,14 +223,9 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < 7; i++) {
             dateOfWeek.add(df.format(c.getTime()));
-           // Toast.makeText(this, "" + df.format(c.getTime()), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "" + df.format(c.getTime()), Toast.LENGTH_SHORT).show();
             c.add(Calendar.DATE, 1);
         }
-
-
-
-
-
     }
 
 
@@ -243,9 +237,8 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         dataPointsDia = null;
         dataPointsSys = null;
         chart.removeAllSeries();
+        colorIndex.setVisibility(View.VISIBLE);
 
-
-        Toast.makeText(this, "systolic : diastolic", Toast.LENGTH_SHORT).show();
         pointsGraphSeries = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries);
         pointsGraphSeries2 = new PointsGraphSeries<>();
@@ -294,8 +287,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
                         dataPointsDia[index1] = new DataPoint(map.getKey(), map.getValue());
 
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     index1++;
@@ -310,7 +302,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
                         dataPointsSys[index2] = new DataPoint(map.getKey(), map.getValue());
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     index2++;
@@ -328,15 +320,13 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     pointsGraphSeries.resetData(dataPointsDia);
                     pointsGraphSeries2.resetData(dataPointsSys);
                     chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
-                    pointsGraphSeries.setColor(Color.RED);
-                    pointsGraphSeries.setSize(30);
+                    pointsGraphSeries.setSize(15);
                     pointsGraphSeries.setShape(PointsGraphSeries.Shape.POINT);
-                    pointsGraphSeries2.setColor(Color.GREEN);
-                    pointsGraphSeries2.setSize(30);
+                    pointsGraphSeries2.setColor(Color.BLACK);
+                    pointsGraphSeries2.setSize(15);
                     pointsGraphSeries2.setShape(PointsGraphSeries.Shape.POINT);
 
-                }
-                catch ( Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -359,6 +349,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
         pointsGraphSeries = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries);
+
 
         firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SimpleDateFormat")
@@ -397,11 +388,11 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     try {
                         dataPointsDia[index1] = new DataPoint(map.getKey(), map.getValue());
 
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
 
                         e.printStackTrace();
-                    }    index1++;
+                    }
+                    index1++;
 
 
                 }
@@ -418,9 +409,8 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getGridLabelRenderer().setVerticalAxisTitle("TEMPERATURE");
-                    pointsGraphSeries.setColor(Color.RED);
-                    pointsGraphSeries.setSize(30);
-                }catch (Exception e){
+                    pointsGraphSeries.setSize(15);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -434,11 +424,11 @@ public class HealthWeeklyActivity extends AppCompatActivity {
     }
 
     public void WaterTaken() {
-        index1=0;
+        index1 = 0;
         chart.removeAllSeries();
 
         dateIntegerMapDia.clear();
-        dataPointsDia=null;
+        dataPointsDia = null;
         pointsGraphSeries = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries);
 
@@ -455,7 +445,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                         date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
-                        if(dateOfWeek.contains(time)){
+                        if (dateOfWeek.contains(time)) {
                             dateIntegerMapDia.put(Integer.parseInt(new SimpleDateFormat("u").format(date)),
                                     Integer.parseInt(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
                                             getValue()));
@@ -472,7 +462,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 }
 
 
-                dataPointsDia=new DataPoint[dateIntegerMapDia.size()];
+                dataPointsDia = new DataPoint[dateIntegerMapDia.size()];
                 for (Map.Entry<Integer, Integer> map : dateIntegerMapDia.entrySet()) {
 
                     try {
@@ -480,8 +470,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
                         dataPointsDia[index1] = new DataPoint(map.getKey(), map.getValue());
 
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     index1++;
@@ -497,10 +486,8 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getGridLabelRenderer().setVerticalAxisTitle("WATER INTAKE");
-                    pointsGraphSeries.setColor(Color.RED);
-                    pointsGraphSeries.setSize(30);
-                }
-                catch (Exception e){
+                    pointsGraphSeries.setSize(15);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -515,9 +502,9 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
 
     public void Sugar() {
-        index1=0;
+        index1 = 0;
         dateIntegerMapDia.clear();
-        dataPointsDia=null;
+        dataPointsDia = null;
         chart.removeAllSeries();
         pointsGraphSeries = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries);
@@ -535,7 +522,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                         date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
-                        if(dateOfWeek.contains(time)){
+                        if (dateOfWeek.contains(time)) {
                             dateIntegerMapDia.put(Integer.parseInt(new SimpleDateFormat("u").format(date)),
                                     Integer.parseInt(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
                                             getValue()));
@@ -552,7 +539,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 }
 
 
-                dataPointsDia=new DataPoint[dateIntegerMapDia.size()];
+                dataPointsDia = new DataPoint[dateIntegerMapDia.size()];
                 for (Map.Entry<Integer, Integer> map : dateIntegerMapDia.entrySet()) {
 
                     try {
@@ -560,8 +547,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
                         dataPointsDia[index1] = new DataPoint(map.getKey(), map.getValue());
 
-                    }
-                    catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     index1++;
@@ -571,7 +557,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 try {
 
 
-
                     chart.getViewport().setXAxisBoundsManual(true);
                     chart.getViewport().setMinX(1);
                     chart.getViewport().setMaxX(7);
@@ -579,12 +564,11 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     chart.getViewport().setMaxY(400);
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
-                    pointsGraphSeries.setColor(Color.RED);
-                    pointsGraphSeries.setSize(30);
+                    pointsGraphSeries.setSize(15);
 
                     chart.getGridLabelRenderer().setVerticalAxisTitle("SUGAR");
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -596,7 +580,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }
