@@ -5,30 +5,29 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartFormat;
-import com.anychart.AnyChartView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jjoe64.graphview.DefaultLabelFormatter;
-import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.txusballesteros.widgets.FitChart;
+import com.txusballesteros.widgets.FitChartValue;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -37,19 +36,20 @@ import java.util.TreeMap;
 public class DailyStatusActivity extends AppCompatActivity {
 
 
-    private Date firstDate,lastDate;
-    private AnyChartView anyChart;
     private int index = 0;
-    private TextView BP, Sugar, WaterTaken, Temp, MainTitle, dateDaily;
-    private GraphView chart;
+    private TextView BP, Sugar, WaterTaken, Temp, MainTitle, dateDaily,sysText,diaText,valueText;
     private DatabaseReference firebaseDatabase;
     private String firebaseAuth;
     private PointsGraphSeries<DataPoint> pointsGraphSeries;
-    private DataPoint[] dataPoints;
-    private SimpleDateFormat sdf = new SimpleDateFormat("HH");
-    private Map<Date, Integer> dateIntegerMap = new TreeMap<>();
+    private SimpleDateFormat sdf = new SimpleDateFormat("HH aaaa");
+    private Map<Long, Integer> dateIntegerMap = new TreeMap<>();
+    private SimpleDateFormat sdf1 = new SimpleDateFormat("hh:mm:ss");
+    private FitChart fitChartDia, fitChartSys, fitValue;
+    private RelativeLayout fitRelative;
+    private LinearLayout fitLinear;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,22 +61,33 @@ public class DailyStatusActivity extends AppCompatActivity {
         Temp = findViewById(R.id.tempDaily);
         MainTitle = findViewById(R.id.bpDailyTitle);
         dateDaily = findViewById(R.id.dateDaily);
-        chart = findViewById(R.id.chart);
-        anyChart = findViewById(R.id.anychartDaily);
+        fitChartDia = findViewById(R.id.fitdia);
+        fitChartSys = findViewById(R.id.fitsys);
+        fitValue = findViewById(R.id.fitvalue);
+        fitRelative = findViewById(R.id.fitRelative);
+        fitLinear=findViewById(R.id.valueLinear);
+        sysText=findViewById(R.id.systolicChange);
+        diaText=findViewById(R.id.diastolicChange);
+        valueText=findViewById(R.id.valuefit);
 
 
+        //fitchart
+        fitChartDia.setMinValue(0);
+        fitChartDia.setMaxValue(250);
+        fitChartSys.setMinValue(0);
+        fitChartSys.setMaxValue(250);
 
-        pointsGraphSeries = new PointsGraphSeries<>();
-        pointsGraphSeries.setShape(PointsGraphSeries.Shape.TRIANGLE);
-        chart.addSeries(pointsGraphSeries);
-        chart.setCursorMode(true);
-
-
-
-
-
-
-
+        fitChartSys.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    Toast.makeText(DailyStatusActivity.this, "sys", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
 
         try {
@@ -89,24 +100,6 @@ public class DailyStatusActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
-
-        chart.getGridLabelRenderer().setNumHorizontalLabels(12);
-
-
-
-        chart.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-            @Override
-            public String formatLabel(double value, boolean isValueX) {
-
-
-                if (isValueX) {
-                    return sdf.format(new Date((long) value));
-                } else {
-                    return super.formatLabel(value, isValueX);
-
-                }
-            }
-        });
 
 
         //current date
@@ -129,6 +122,9 @@ public class DailyStatusActivity extends AppCompatActivity {
 
             }
         });
+
+        BloodPressure();
+
 
         //background for blood pressure
         BP.setBackgroundResource(R.drawable.coloredchooser);
@@ -157,7 +153,7 @@ public class DailyStatusActivity extends AppCompatActivity {
                 WaterTaken.setTextColor(Color.BLACK);
                 Temp.setTextColor(Color.BLACK);
                 MainTitle.setText("Blood Pressure on");
-              //  BloodPressure();
+                BloodPressure();
 
 
                 break;
@@ -172,6 +168,7 @@ public class DailyStatusActivity extends AppCompatActivity {
                 WaterTaken.setTextColor(Color.BLACK);
                 Temp.setTextColor(Color.BLACK);
                 MainTitle.setText("Sugar on");
+
 
                 Sugar();
 
@@ -215,385 +212,152 @@ public class DailyStatusActivity extends AppCompatActivity {
 
     }
 
+    private void Sugar() {
+
+        fitRelative.setVisibility(View.GONE);
+        fitLinear.setVisibility(View.VISIBLE);
+        fitValue.setMinValue(50);
+        fitValue.setMaxValue(400);
+        firebaseDatabase.child("Sugar").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+                            fitValue.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
+                            valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+" mg/dL");
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void WaterTaken() {
+
+        fitRelative.setVisibility(View.GONE);
+        fitLinear.setVisibility(View.VISIBLE);
+        fitValue.setMinValue(0);
+        fitValue.setMaxValue(10);
+        firebaseDatabase.child("Water").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+                            fitValue.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
+                            valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+" Litre");
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void Temperature() {
+        fitRelative.setVisibility(View.GONE);
+        fitLinear.setVisibility(View.VISIBLE);
+        fitValue.setMinValue(0);
+        fitValue.setMaxValue(130);
+        firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+                            fitValue.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
+
+                            valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+"ºC");
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void BloodPressure() {
+
+        fitRelative.setVisibility(View.VISIBLE);
+        fitLinear.setVisibility(View.GONE);
+        firebaseDatabase.child("BloodPressure").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+                            fitChartDia.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getDiastolic()));
+                            fitChartSys.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getSystolic()));
+                            sysText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getSystolic()+"/68");
+                            diaText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getDiastolic()+"/198");
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
 
     }
-
-
-    public void WaterTaken() {
-
-        dateIntegerMap.clear();
-        dataPoints=null;
-        index=0;
-
-        if (firebaseAuth != null) {
-            firebaseDatabase.child("Water").addValueEventListener(new ValueEventListener() {
-                @SuppressLint("SimpleDateFormat")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Date date = null;
-
-                        try {
-                            //current date
-                            Calendar c = Calendar.getInstance();
-                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                            String formattedDate = df.format(c.getTime());
-
-                            //extract date from date and time
-                            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
-                            String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
-
-                            if (formattedDate.equals(time)) {
-
-                                try {
-
-                                    dateIntegerMap.put(new Timestamp(date.getTime()),
-                                            Integer.parseInt(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
-                                                    getValue()));
-
-
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-
-                    dataPoints = new DataPoint[dateIntegerMap.size()];
-
-
-                    try {
-
-
-                        for (Map.Entry<Date, Integer> map : dateIntegerMap.entrySet()) {
-
-                            dataPoints[index] = new DataPoint(map.getKey(), map.getValue());
-
-                            index++;
-
-                        }
-                        if(dateIntegerMap.size()<12){
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(dateIntegerMap.size());
-                        }
-                        else {
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(12);
-                        }
-                        pointsGraphSeries.resetData(dataPoints);
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
-
-
-
-    public void BloodPressure() {
-
-        index=0;
-        dataPoints=null;
-        dateIntegerMap.clear();
-
-        if (firebaseAuth != null) {
-            firebaseDatabase.child("BloodPressure").addValueEventListener(new ValueEventListener() {
-                @SuppressLint("SimpleDateFormat")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Date date = null;
-
-                        try {
-                            //current date
-                            Calendar c = Calendar.getInstance();
-                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                            String formattedDate = df.format(c.getTime());
-
-                            //extract date from date and time
-                            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
-                            String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
-
-                            if (formattedDate.equals(time)) {
-
-                                try {
-
-                                    dateIntegerMap.put(new Timestamp(date.getTime()),
-                                            Integer.parseInt(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
-                                                    getValue()));
-
-
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-
-                    dataPoints = new DataPoint[dateIntegerMap.size()];
-
-
-                    try {
-
-
-                        for (Map.Entry<Date, Integer> map : dateIntegerMap.entrySet()) {
-
-                            dataPoints[index] = new DataPoint(map.getKey(), map.getValue());
-
-                            index++;
-
-                        }
-                        if(dateIntegerMap.size()<12){
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(dateIntegerMap.size());
-                        }
-                        else {
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(12);
-                        }
-                        if(dateIntegerMap.size()<12){
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(dateIntegerMap.size());
-                        }
-                        else {
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(12);
-                        }
-
-                        pointsGraphSeries.resetData(dataPoints);
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
-
-
-    public void Sugar() {
-
-        index=0;
-        dataPoints=null;
-        dateIntegerMap.clear();
-
-        if (firebaseAuth != null) {
-            firebaseDatabase.child("Sugar").addValueEventListener(new ValueEventListener() {
-                @SuppressLint("SimpleDateFormat")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Date date = null;
-
-                        try {
-                            //current date
-                            Calendar c = Calendar.getInstance();
-                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                            String formattedDate = df.format(c.getTime());
-
-                            //extract date from date and time
-                            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
-                            String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
-
-                            if (formattedDate.equals(time)) {
-
-                                try {
-
-                                    dateIntegerMap.put(new Timestamp(date.getTime()),
-                                            Integer.parseInt(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
-                                                    getValue()));
-
-
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-
-                    dataPoints = new DataPoint[dateIntegerMap.size()];
-
-
-                    try {
-
-
-                        for (Map.Entry<Date, Integer> map : dateIntegerMap.entrySet()) {
-
-
-                            dataPoints[index] = new DataPoint(map.getKey(), map.getValue());
-
-                            index++;
-
-                        }
-                        if(dateIntegerMap.size()<12){
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(dateIntegerMap.size());
-                        }
-                        else {
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(12);
-                        }
-
-
-                        pointsGraphSeries.resetData(dataPoints);
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
-
-
-    public void Temperature() {
-
-        index=0;
-        dataPoints=null;
-        dateIntegerMap.clear();
-
-        if (firebaseAuth != null) {
-            firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
-                @SuppressLint("SimpleDateFormat")
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Date date = null;
-
-                        try {
-                            //current date
-                            Calendar c = Calendar.getInstance();
-                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                            String formattedDate = df.format(c.getTime());
-
-                            //extract date from date and time
-                            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
-                            String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
-
-
-                            if (formattedDate.equals(time)) {
-
-                                try {
-
-                                    dateIntegerMap.put(new Timestamp(date.getTime()),
-                                            Integer.parseInt(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
-                                                    getValue()));
-
-
-                                } catch (ArrayIndexOutOfBoundsException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-
-                    dataPoints = new DataPoint[dateIntegerMap.size()];
-
-
-                    try {
-
-
-                        for (Map.Entry<Date, Integer> map : dateIntegerMap.entrySet()) {
-
-                            dataPoints[index] = new DataPoint(map.getKey(), map.getValue());
-
-                            index++;
-
-                        }
-
-                        if(dateIntegerMap.size()<12){
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(dateIntegerMap.size());
-                        }
-                        else {
-                            chart.getGridLabelRenderer().setNumHorizontalLabels(12);
-                        }
-                        pointsGraphSeries.resetData(dataPoints);
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
-
 
 
 }

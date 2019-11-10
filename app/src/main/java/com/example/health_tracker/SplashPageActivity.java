@@ -19,7 +19,7 @@ public class SplashPageActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
-        }, 4000L);
+        }, 2000L);
 
     }
 

@@ -1,7 +1,9 @@
 package com.example.health_tracker;
 
 import android.annotation.SuppressLint;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.text.DateFormat;
@@ -84,6 +87,16 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         Temp.setTextColor(Color.BLACK);
 
 
+
+        //backbutton
+        findViewById(R.id.backWeek).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
         //graphview
 
         pointsGraphSeries = new PointsGraphSeries<>();
@@ -91,11 +104,15 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         pointsGraphSeries2 = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries2);
         chart.setCursorMode(true);
+        pointsGraphSeries.setColor(Color.RED);
+        pointsGraphSeries.setSize(50);
 
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(chart);
-        staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6"});
-        chart.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-        chart.getGridLabelRenderer().setLabelsSpace(5);
+        pointsGraphSeries.setShape(PointsGraphSeries.Shape.TRIANGLE);
+        pointsGraphSeries2.setShape(PointsGraphSeries.Shape.RECTANGLE);
+      //  StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(chart);
+       // staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6"});
+      //  chart.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+       // chart.getGridLabelRenderer().setLabelsSpace(5);
         chart.getGridLabelRenderer().setPadding(50);
         chart.getViewport().setBackgroundColor(Color.GRAY);
         chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
@@ -105,6 +122,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         chart.getViewport().setDrawBorder(true);
         chart.getViewport().setBorderColor(Color.BLACK);
         chart.getCursorMode().setBackgroundColor(Color.WHITE);
+
 
 
 
@@ -206,9 +224,14 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < 7; i++) {
             dateOfWeek.add(df.format(c.getTime()));
-            //  Toast.makeText(this, "" + df.format(c.getTime()), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "" + df.format(c.getTime()), Toast.LENGTH_SHORT).show();
             c.add(Calendar.DATE, 1);
         }
+
+
+
+
+
     }
 
 
@@ -238,7 +261,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     Date date = null;
                     //extract date from date and time
                     try {
-                        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if (dateOfWeek.contains(time)) {
@@ -297,15 +320,20 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
 
                     chart.getViewport().setXAxisBoundsManual(true);
-                    chart.getViewport().setMinX(0);
-                    chart.getViewport().setMaxX(6);
+                    chart.getViewport().setMinX(1);
+                    chart.getViewport().setMaxX(7);
                     chart.getViewport().setMinY(0);
                     chart.getViewport().setMaxY(250);
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
                     pointsGraphSeries2.resetData(dataPointsSys);
                     chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
-
+                    pointsGraphSeries.setColor(Color.RED);
+                    pointsGraphSeries.setSize(30);
+                    pointsGraphSeries.setShape(PointsGraphSeries.Shape.POINT);
+                    pointsGraphSeries2.setColor(Color.GREEN);
+                    pointsGraphSeries2.setSize(30);
+                    pointsGraphSeries2.setShape(PointsGraphSeries.Shape.POINT);
 
                 }
                 catch ( Exception e){
@@ -342,7 +370,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     Date date = null;
                     //extract date from date and time
                     try {
-                        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if (dateOfWeek.contains(time)) {
@@ -383,14 +411,15 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
 
                     chart.getViewport().setXAxisBoundsManual(true);
-                    chart.getViewport().setMinX(0);
-                    chart.getViewport().setMaxX(6);
+                    chart.getViewport().setMinX(1);
+                    chart.getViewport().setMaxX(7);
                     chart.getViewport().setMinY(20);
                     chart.getViewport().setMaxY(130);
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getGridLabelRenderer().setVerticalAxisTitle("TEMPERATURE");
-
+                    pointsGraphSeries.setColor(Color.RED);
+                    pointsGraphSeries.setSize(30);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -423,7 +452,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     Date date = null;
                     //extract date from date and time
                     try {
-                        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if(dateOfWeek.contains(time)){
@@ -461,14 +490,15 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
                 try {
                     chart.getViewport().setXAxisBoundsManual(true);
-                    chart.getViewport().setMinX(0);
-                    chart.getViewport().setMaxX(6);
+                    chart.getViewport().setMinX(1);
+                    chart.getViewport().setMaxX(7);
                     chart.getViewport().setMinY(0);
                     chart.getViewport().setMaxY(10);
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getGridLabelRenderer().setVerticalAxisTitle("WATER INTAKE");
-
+                    pointsGraphSeries.setColor(Color.RED);
+                    pointsGraphSeries.setSize(30);
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -502,7 +532,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                     Date date = null;
                     //extract date from date and time
                     try {
-                        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("" + dataSnapshot1.getKey());
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if(dateOfWeek.contains(time)){
@@ -541,13 +571,16 @@ public class HealthWeeklyActivity extends AppCompatActivity {
                 try {
 
 
+
                     chart.getViewport().setXAxisBoundsManual(true);
-                    chart.getViewport().setMinX(0);
+                    chart.getViewport().setMinX(1);
                     chart.getViewport().setMaxX(7);
                     chart.getViewport().setMinY(50);
                     chart.getViewport().setMaxY(400);
                     chart.getGridLabelRenderer().setNumVerticalLabels(6);
                     pointsGraphSeries.resetData(dataPointsDia);
+                    pointsGraphSeries.setColor(Color.RED);
+                    pointsGraphSeries.setSize(30);
 
                     chart.getGridLabelRenderer().setVerticalAxisTitle("SUGAR");
 

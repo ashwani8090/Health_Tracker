@@ -114,7 +114,7 @@ public class SugarActivity extends AppCompatActivity {
         try {
 
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDate = df.format(c.getTime());
 
             firebaseDatabase.child(""+formattedDate).setValue(new Getter_setter_Database(s)).addOnCompleteListener(new OnCompleteListener<Void>() {
