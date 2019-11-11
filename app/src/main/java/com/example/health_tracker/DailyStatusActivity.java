@@ -79,17 +79,6 @@ public class DailyStatusActivity extends AppCompatActivity {
         fitChartSys.setMinValue(0);
         fitChartSys.setMaxValue(250);
 
-        fitChartSys.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    Toast.makeText(DailyStatusActivity.this, "sys", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
 
 
         try {

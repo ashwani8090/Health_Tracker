@@ -1,9 +1,12 @@
 package com.example.health_tracker;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,11 +35,17 @@ public class SuggestionActivity extends AppCompatActivity {
     private String gender;
     private int height;
     private Getter_setter_Signup signup;
+    private RecyclerView recyclerView;
+    private AdapterExpanded adapterExpanded;
+    private LinearLayoutManager linearLayoutManager;
+    private List<DataModel> list=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggestion);
+        recyclerView=findViewById(R.id.RecyclerViewSuggestion);
+        linearLayoutManager=new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
 
         try {
@@ -47,6 +56,26 @@ public class SuggestionActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        list.clear();
+        //dest recycler view
+        list.add(new DataModel("BMI",0));
+        list.add(new DataModel("Blood Pressure",1));
+        list.add(new DataModel("Body Temperature",2));
+        list.add(new DataModel("Body Sugar",3));
+
+        adapterExpanded=new AdapterExpanded(getApplicationContext(),list);
+        recyclerView.setAdapter(adapterExpanded);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
+
+
+
+
+
+
 
 
         //back button
@@ -64,16 +93,7 @@ public class SuggestionActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-  //Analysing data using bmi
-
+   //Analysing data using bmi
     public double BMI(double weight, int height) {
 /*
         BMI = weight (kg) / [height (m)]2
@@ -104,15 +124,7 @@ public class SuggestionActivity extends AppCompatActivity {
         return bmi;
     }
 
-
-    public void SaveValues(int Age, double Weight, String Gender, int Height) {
-        age = Age;
-        weight = Weight;
-        gender = Gender;
-        height = Height;
-    }
-
-  //Analyse blood pressure data
+   //Analyse blood pressure data
    public void AnalyseBloodPressure(double Systolic,double Diastolic){
 
         systolic=Systolic;
@@ -178,6 +190,7 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
 */
 
    }
+
     //Analyse Temp data
     public void AnalyseTemperature(double Temp){
        /* Classed as:         Celsius         Fahrenheit
@@ -194,21 +207,29 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
 
     }
 
-
-
-
-
-
     public void AnalyseSugar(double SugarValue){
 
 /*
+
+Fasting Plasma Glucose (FPG) Test
+The FPG is most reliable when done in the morning.
+Results and their meaning are shown in table 1.
+ If your fasting glucose level is 100 to 125 mg/dL,
+  you have a form of prediabetes called impaired fasting glucose (IFG),
+   meaning that you are more likely to develop type 2 diabetes but do not have it yet.
+   A level of 126 mg/dL or above, confirmed by repeating the test on another day, means that you have diabetes.
+Table 1. Fasting Plasma Glucose Test
+Plasma Glucose Result (mg/dL)   Diagnosis
+99 and below                    Normal
+100 to 125                      Prediabetes(impaired fasting glucose)
+126 and above                   Diabetes*
+
   Random blood sugar test.
   A blood sample will be taken at a random time.
   Regardless of when you last ate,
   a random blood sugar level of 200 milligrams per deciliter (mg/dL) — 11.1 millimoles per liter (mmol/L) — or higher suggests diabetes.*/
 
     }
-
 
     public void Sugar(){
 
@@ -342,6 +363,14 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
 
 
     }
+
+    public void SaveValues(int Age, double Weight, String Gender, int Height) {
+        age = Age;
+        weight = Weight;
+        gender = Gender;
+        height = Height;
+    }
+
 
 
 }

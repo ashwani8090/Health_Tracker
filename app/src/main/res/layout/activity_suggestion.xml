@@ -24,13 +24,36 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/backSuggestion"
         android:text="Suggestion"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="25sp"
-        android:layout_alignBaseline="@id/backSuggestion"
         android:textStyle="bold"
-
         />
+
+    <TextView
+        android:id="@+id/textTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/backSuggestion"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Tip of the day"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:drawableEnd="@drawable/icon_suggestion"
+        android:gravity="center_vertical"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RecyclerViewSuggestion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textTip"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        >
+
+    </android.support.v7.widget.RecyclerView>
 
 
 

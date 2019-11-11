@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/titleTopicExpand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/backgound_stoke"/>
+
+        <RelativeLayout
+            android:id="@+id/webviewRelative"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/titleTopicExpand">
+
+           <WebView
+               android:id="@+id/webviewTopic"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+           </WebView>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
