@@ -2,6 +2,7 @@ package com.example.health_tracker;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -113,6 +114,21 @@ public class HealthMonthlyActivity extends AppCompatActivity {
                 }
             }
         });*/
+
+
+      //back button
+        findViewById(R.id.backMonthly).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getApplicationContext(), DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+
+
+            }
+        });
+
+
 
 
         //background for blood pressure

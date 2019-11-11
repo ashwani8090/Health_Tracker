@@ -74,6 +74,8 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         }
 
 
+        Toast.makeText(this, "Monday - Sunday", Toast.LENGTH_SHORT).show();
+
         //background for blood pressure
         BP.setBackgroundResource(R.drawable.coloredchooser);
         Sugar.setBackgroundResource(R.drawable.chooserbackground);
@@ -134,6 +136,9 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     public void chartShowWeek(View view) {
 

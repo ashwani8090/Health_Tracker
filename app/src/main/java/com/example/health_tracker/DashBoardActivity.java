@@ -15,18 +15,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,12 +35,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public class OptionsActivity extends AppCompatActivity {
+public class DashBoardActivity extends AppCompatActivity {
 
     private Dialog dialog;
     private LinearLayout linearLayoutPopUp;
@@ -110,7 +104,8 @@ public class OptionsActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (R.id.logout_button == item.getItemId()) {
                     firebaseAuth.signOut();
-                    startActivity(new Intent(OptionsActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    startActivity(new Intent(DashBoardActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    finish();
                     return true;
                 } else {
                     Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -160,7 +155,7 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(OptionsActivity.this, BloodPressureActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                startActivity(new Intent(DashBoardActivity.this, BloodPressureActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
             }
         });
@@ -168,7 +163,7 @@ public class OptionsActivity extends AppCompatActivity {
         temperatureFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OptionsActivity.this, BodyTemperatureActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                startActivity(new Intent(DashBoardActivity.this, BodyTemperatureActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
             }
         });
@@ -179,7 +174,7 @@ public class OptionsActivity extends AppCompatActivity {
         waterFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OptionsActivity.this, WaterIntakeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                startActivity(new Intent(DashBoardActivity.this, WaterIntakeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
             }
         });
@@ -188,7 +183,7 @@ public class OptionsActivity extends AppCompatActivity {
         sugarFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OptionsActivity.this, SugarActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                startActivity(new Intent(DashBoardActivity.this, SugarActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
             }
         });
@@ -232,7 +227,7 @@ public class OptionsActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             onStart();
-                            Toast.makeText(OptionsActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DashBoardActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

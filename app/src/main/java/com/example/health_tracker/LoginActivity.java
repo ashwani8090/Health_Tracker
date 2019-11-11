@@ -8,16 +8,12 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,8 +34,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.security.AccessController.getContext;
-
 public class LoginActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
@@ -57,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private List<String> listEmail=new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editorEmail;
+    private int c=0;
 
 
     @Override
@@ -64,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        c=0;
         create_account = findViewById(R.id.create_account);
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.forget_password);
@@ -97,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         if ((firebaseAuthLogin.getCurrentUser() != null) && (firebaseAuthLogin.getCurrentUser().isEmailVerified())) {
 
 
-            Intent intent=new Intent(LoginActivity.this, OptionsActivity.class);
+            Intent intent=new Intent(LoginActivity.this, DashBoardActivity.class);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         }
@@ -247,7 +243,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             progressBar.setVisibility(View.INVISIBLE);
 
-                            startActivity(new Intent(getApplicationContext(),OptionsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                            startActivity(new Intent(getApplicationContext(), DashBoardActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                             finish();
                         }
                         catch (Exception e){
@@ -317,6 +313,24 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        c=0;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        c++;
+        if (c == 2) {
+            super.onBackPressed();
+            finish();
+        } else {
+            Toast.makeText(this, "Press back to exit", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     @Override
     public void onResume() {

@@ -28,7 +28,6 @@ import com.txusballesteros.widgets.FitChartValue;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +120,7 @@ public class DailyStatusActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(DailyStatusActivity.this, OptionsActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                startActivity(new Intent(DailyStatusActivity.this, DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
             }
         });
@@ -225,6 +224,8 @@ public class DailyStatusActivity extends AppCompatActivity {
         values.add(new FitChartValue(0f,
                 ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
         fitValue.setValues(values);
+        valueText.setText("0"+" mg/dL");
+
 
         firebaseDatabase.child("Sugar").addValueEventListener(new ValueEventListener() {
             @Override
@@ -265,6 +266,8 @@ public class DailyStatusActivity extends AppCompatActivity {
         values.add(new FitChartValue(0f,
                 ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
         fitValue.setValues(values);
+        valueText.setText("0"+" Litre");
+
 
         firebaseDatabase.child("Water").addValueEventListener(new ValueEventListener() {
             @Override
@@ -307,6 +310,8 @@ public class DailyStatusActivity extends AppCompatActivity {
         values.add(new FitChartValue(0f,
                 ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
         fitValue.setValues(values);
+        valueText.setText("0"+"ºC");
+
 
         firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
             @Override

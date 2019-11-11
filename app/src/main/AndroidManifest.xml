@@ -24,9 +24,7 @@
         <activity android:name=".HealthWeeklyActivity" />
         <activity android:name=".DailyStatusActivity" />
         <activity android:name=".TopicsActivity" />
-        <activity
-            android:name=".OptionsActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".DashBoardActivity"/>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
