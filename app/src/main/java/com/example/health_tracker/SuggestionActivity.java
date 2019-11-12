@@ -1,24 +1,13 @@
 package com.example.health_tracker;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.txusballesteros.widgets.FitChartValue;
-
-import java.text.ParseException;
+import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,55 +15,51 @@ import java.util.List;
 import java.util.Objects;
 
 public class SuggestionActivity extends AppCompatActivity {
-
-
-    private DatabaseReference firebaseDatabaseUser;
-    private FirebaseUser firebaseAuth;
-    private double weight, bmi,systolic,diastolic,temp,sugarValue,quantityWater;
+    public Getter_Setter_Suggest objectSuggest;
+    private double weight, bmi, systolic, diastolic, temp, sugarValue;
     private int age;
     private String gender;
     private int height;
-    private Getter_setter_Signup signup;
     private RecyclerView recyclerView;
     private AdapterExpanded adapterExpanded;
     private LinearLayoutManager linearLayoutManager;
-    private List<DataModel> list=new ArrayList<>();
-
+    private List<DataModel> list = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggestion);
-        recyclerView=findViewById(R.id.RecyclerViewSuggestion);
-        linearLayoutManager=new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView = findViewById(R.id.RecyclerViewSuggestion);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+
+        objectSuggest = new Getter_Setter_Suggest();
+
+        sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
 
-        try {
-            firebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
-            firebaseDatabaseUser = FirebaseDatabase.getInstance().getReference("User").child("" + firebaseAuth.getUid());
+        String date=sharedPreferences.getString("date","2000-1-1");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+      //  Toast.makeText(this, ""+date, Toast.LENGTH_SHORT).show();
+
+        if(Objects.requireNonNull(date).equals(sdf.format(new Date()))){
+
+            height=sharedPreferences.getInt("height",0);
+            weight=sharedPreferences.getFloat("weight",0f);
+            age=sharedPreferences.getInt("age",0);
+            systolic=sharedPreferences.getFloat("systolic",0f);
+            diastolic=sharedPreferences.getFloat("diastolic",0f);
+            sugarValue=sharedPreferences.getFloat("sugar",0f);
+            temp=sharedPreferences.getFloat("temp",0f);
+            gender=sharedPreferences.getString("gender",null);
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            objectSuggest=new Getter_Setter_Suggest( height, weight,
+            age,  systolic, diastolic,
+             temp,  sugarValue,  BMI(weight,height) ,  gender);
+
+
         }
-
-
-        list.clear();
-        //dest recycler view
-        list.add(new DataModel("BMI",0));
-        list.add(new DataModel("Blood Pressure",1));
-        list.add(new DataModel("Body Temperature",2));
-        list.add(new DataModel("Body Sugar",3));
-
-        adapterExpanded=new AdapterExpanded(getApplicationContext(),list);
-        recyclerView.setAdapter(adapterExpanded);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-
-
-
-
-
-
 
 
 
@@ -87,13 +72,28 @@ public class SuggestionActivity extends AppCompatActivity {
         });
 
 
-        AgeSexWeight();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        list.clear();
+        //dest recycler view
+        list.add(new DataModel("BMI", 0));
+        list.add(new DataModel("Blood Pressure", 1));
+        list.add(new DataModel("Body Temperature", 2));
+        list.add(new DataModel("Body Sugar", 3));
+
+        adapterExpanded = new AdapterExpanded(getApplicationContext(), list,objectSuggest);
+        recyclerView.setAdapter(adapterExpanded);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
     }
 
-
-   //Analysing data using bmi
+    //Analysing data using bmi
     public double BMI(double weight, int height) {
 /*
         BMI = weight (kg) / [height (m)]2
@@ -120,15 +120,17 @@ public class SuggestionActivity extends AppCompatActivity {
 
 
 */
-        bmi = weight / Math.pow((height / 100.0), 2);
-        return bmi;
+        return (weight )/ Math.pow((height / 100.0), 2);
+
+
     }
 
-   //Analyse blood pressure data
-   public void AnalyseBloodPressure(double Systolic,double Diastolic){
+    //Analyse blood pressure data
+    public void AnalyseBloodPressure(double Systolic, double Diastolic) {
 
-        systolic=Systolic;
-        diastolic=Diastolic;
+        systolic = Systolic;
+        diastolic = Diastolic;
+
 
       /*
        systolic pressure – the pressure when your heart pushes blood out
@@ -189,10 +191,10 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
 
 */
 
-   }
+    }
 
     //Analyse Temp data
-    public void AnalyseTemperature(double Temp){
+    public void AnalyseTemperature(double Temp) {
        /* Classed as:         Celsius         Fahrenheit
         Hypothermia          <35.0°C          95.0°F
         Normal               36.5 - 37.5°C    97.7 - 99.5°F
@@ -200,14 +202,19 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
         Hyperpyrexia         >40.0 or 41.5°C  104.0 or 106.7°F
 
 
+
         Babies and children. In babies and children, the average body temperature ranges from 97.9°F (36.6°C) to 99°F (37.2°C).
         Adults. Among adults, the average body temperature ranges from 97°F (36.1°C) to 99°F (37.2°C).
         Adults over age 65. In older adults, the average body temperature is lower than 98.6°F (36.2°C).
 */
 
+        temp = Temp;
+
     }
 
-    public void AnalyseSugar(double SugarValue){
+    public void AnalyseSugar(double SugarValue) {
+        sugarValue = SugarValue;
+        Toast.makeText(this, "From Anlyzer "+sugarValue, Toast.LENGTH_SHORT).show();
 
 /*
 
@@ -231,145 +238,9 @@ Plasma Glucose Result (mg/dL)   Diagnosis
 
     }
 
-    public void Sugar(){
-
-        firebaseDatabaseUser.child("Sugar").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Date date = null;
-                    //extract date from date and time
-                    try {
-                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                        String time = formatter.format(date);
-                        if (time.equals(formatter.format(new Date().getTime()))) {
-                            AnalyseSugar(Double.parseDouble(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
 
-
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
-    public void Temperature(){
-
-        firebaseDatabaseUser.child("Temperature").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Date date = null;
-                    //extract date from date and time
-                    try {
-                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                        String time = formatter.format(date);
-                        if (time.equals(formatter.format(new Date().getTime()))) {
-
-                            AnalyseTemperature(Double.parseDouble(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
-
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
-    public void BloodPressure(){
-
-        firebaseDatabaseUser.child("BloodPressure").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Date date = null;
-                    //extract date from date and time
-                    try {
-                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                        String time = formatter.format(date);
-                        if (time.equals(formatter.format(new Date().getTime()))) {
-
-                            AnalyseBloodPressure(Double.parseDouble(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).getSystolic()),
-                                                 Double.parseDouble(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).getDiastolic()));
-
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
-    public void AgeSexWeight() {
-
-        firebaseDatabaseUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                signup = dataSnapshot.getValue(Getter_setter_Signup.class);
-                SaveValues(Integer.parseInt(Objects.requireNonNull(signup).getAge()),
-                        Double.parseDouble(signup.getWeight()),
-                        signup.getGender(),
-                        Integer.parseInt(signup.getHeight()));
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
-    public void SaveValues(int Age, double Weight, String Gender, int Height) {
-        age = Age;
-        weight = Weight;
-        gender = Gender;
-        height = Height;
-    }
 
 
 

@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,13 +32,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class DashBoardActivity extends AppCompatActivity {
 
+    private Getter_setter_Signup signup;
+    private DatabaseReference firebaseDatabaseUser;
+    private FirebaseUser firebaseAuthSuggest;
     private Dialog dialog;
     private LinearLayout linearLayoutPopUp;
     int c = 0;
@@ -62,8 +66,8 @@ public class DashBoardActivity extends AppCompatActivity {
     private DatabaseReference firebaseProfile;
     private SharedPreferences sharedPreferences;
     private Button updateProfile;
-    private SharedPreferences.Editor editorAge,editorHeight,editorWeight,editorName;
-
+    private SharedPreferences.Editor editorWeight,ageShared,heightShared,systolicShared,diastolicShared,sugarShared,
+            tempShared,genderShared,dateShared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,14 @@ public class DashBoardActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("HealthTracker", Context.MODE_PRIVATE);
 
+        try {
+            firebaseAuthSuggest = FirebaseAuth.getInstance().getCurrentUser();
+            firebaseDatabaseUser = FirebaseDatabase.getInstance().getReference("User").child("" + firebaseAuth.getUid());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -243,7 +255,7 @@ public class DashBoardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         c = 0;
-
+        DataFromFirebase();
         //profile shared preference
         try {
 
@@ -291,6 +303,7 @@ public class DashBoardActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapterDashboard);
 
+
     }
 
 
@@ -306,4 +319,155 @@ public class DashBoardActivity extends AppCompatActivity {
 
 
     }
+
+    public  void DataFromFirebase(){
+
+        firebaseDatabaseUser.child("Sugar").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+
+                            dateShared=sharedPreferences.edit();
+                            sugarShared = sharedPreferences.edit();
+
+                            sugarShared.putFloat("sugar",
+                                    Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).
+                                            getValue())).apply();
+
+                            dateShared.putString("date",dataSnapshot1.getKey()).apply();
+
+
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        firebaseDatabaseUser.child("Temperature").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+                            tempShared = sharedPreferences.edit();
+                            tempShared.putFloat("temp",
+                                    Float.parseFloat(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
+                                            getValue())).apply();
+
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        firebaseDatabaseUser.child("BloodPressure").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Date date = null;
+                    //extract date from date and time
+                    try {
+                        date = new SimpleDateFormat("yyyy-MM-dd").parse("" + dataSnapshot1.getKey());
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                        String time = formatter.format(date);
+                        if (time.equals(formatter.format(new Date().getTime()))) {
+
+                            systolicShared = sharedPreferences.edit();
+                            systolicShared.putFloat("systolic",
+                                    Float.parseFloat(Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
+                                            getSystolic())).apply();
+
+                            diastolicShared = sharedPreferences.edit();
+                            diastolicShared.putFloat("diastolic",
+                                   Float.parseFloat( Objects.requireNonNull(dataSnapshot1.getValue(Getter_setter_Database.class)).
+                                            getDiastolic())).apply();
+
+
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        firebaseDatabaseUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                signup = dataSnapshot.getValue(Getter_setter_Signup.class);
+                heightShared=sharedPreferences.edit();
+                ageShared =sharedPreferences.edit();
+                editorWeight=sharedPreferences.edit();
+                genderShared=sharedPreferences.edit();
+
+                heightShared.putInt("height",Integer.parseInt( signup.getHeight())).apply();
+                editorWeight.putFloat("weight",Float.parseFloat(signup.getWeight())).apply();
+                ageShared.putInt("age",Integer.parseInt(signup.getAge())).apply();
+                genderShared.putString("gender",signup.getGender()).apply();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
+
+
+
 }
