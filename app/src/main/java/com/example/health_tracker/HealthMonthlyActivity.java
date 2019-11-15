@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.text.ParseException;
@@ -85,6 +86,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
 
             e.printStackTrace();
         }
+
 
 
         pointsGraphSeries = new PointsGraphSeries<>();
@@ -302,6 +304,11 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         pointsGraphSeries = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries);
 
+
+
+
+
+
         firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SimpleDateFormat")
             @Override
@@ -349,6 +356,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
                 try {
 
 
+
                     chart.setCursorMode(true);
                     chart.getViewport().setXAxisBoundsManual(true);
                     chart.getViewport().setMinY(0);
@@ -359,7 +367,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
 
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getCursorMode().setBackgroundColor(Color.WHITE);
-                    chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
+                    chart.getGridLabelRenderer().setVerticalAxisTitle("Temperature (°C)");
                     chart.getGridLabelRenderer().setHorizontalAxisTitle("Days");
                     pointsGraphSeries.setSize(15);
                     pointsGraphSeries.setShape(PointsGraphSeries.Shape.POINT);
@@ -384,6 +392,8 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         dateIntegerMapDia.clear();
         dataPointsDia = null;
         chart.removeAllSeries();
+
+
 
 
         pointsGraphSeries = new PointsGraphSeries<>();
@@ -444,7 +454,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
 
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getCursorMode().setBackgroundColor(Color.WHITE);
-                    chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
+                    chart.getGridLabelRenderer().setVerticalAxisTitle("Water Taken(Litre)");
                     chart.getGridLabelRenderer().setHorizontalAxisTitle("Days");
                     pointsGraphSeries.setSize(15);
                     pointsGraphSeries.setShape(PointsGraphSeries.Shape.POINT);
@@ -466,9 +476,12 @@ public class HealthMonthlyActivity extends AppCompatActivity {
 
     private void Sugar() {
         index1 = 0;
+
+
         dateIntegerMapDia.clear();
         dataPointsDia = null;
         chart.removeAllSeries();
+
 
 
         pointsGraphSeries = new PointsGraphSeries<>();
@@ -519,7 +532,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
 
                 try {
 
-
                     chart.setCursorMode(true);
                     chart.getViewport().setXAxisBoundsManual(true);
                     chart.getViewport().setMinY(0);
@@ -530,7 +542,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
 
                     pointsGraphSeries.resetData(dataPointsDia);
                     chart.getCursorMode().setBackgroundColor(Color.WHITE);
-                    chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
+                    chart.getGridLabelRenderer().setVerticalAxisTitle("Sugar(mg/dL");
                     chart.getGridLabelRenderer().setHorizontalAxisTitle("Days");
                     pointsGraphSeries.setSize(15);
                     pointsGraphSeries.setShape(PointsGraphSeries.Shape.POINT);
@@ -558,6 +570,10 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         dataPointsDia = null;
         dataPointsSys = null;
         chart.removeAllSeries();
+
+
+
+
 
         colorIndex.setVisibility(View.VISIBLE);
         pointsGraphSeries = new PointsGraphSeries<>();

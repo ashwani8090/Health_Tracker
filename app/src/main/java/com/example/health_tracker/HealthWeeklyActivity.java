@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.text.DateFormat;
@@ -45,6 +46,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
     private GraphView chart;
     private List<String> dateOfWeek = new ArrayList<>();
     private Integer index1 = 0, index2 = 0;
+
 
 
     @Override
@@ -105,6 +107,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         chart.setCursorMode(true);
         pointsGraphSeries.setColor(Color.RED);
         pointsGraphSeries.setSize(50);
+
 
         pointsGraphSeries.setShape(PointsGraphSeries.Shape.TRIANGLE);
         pointsGraphSeries2.setShape(PointsGraphSeries.Shape.RECTANGLE);
@@ -248,6 +251,10 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         chart.addSeries(pointsGraphSeries);
         pointsGraphSeries2 = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries2);
+
+
+
+
 
         firebaseDatabase.child("BloodPressure").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SimpleDateFormat")
