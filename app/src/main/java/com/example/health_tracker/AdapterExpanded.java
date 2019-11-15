@@ -145,8 +145,8 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
                 //  Toast.makeText(context, objectSuggest.getSystolic()+" "+objectSuggest.getDiastolic(), Toast.LENGTH_SHORT).show();
                 if ((objectSuggest.getDiastolic() < 80) && (objectSuggest.getSystolic() < 120)) {
                     viewHolderExpand.Data.setText(String.format("Normal\nYour blood pressure should be rechecked within 2 years or earlier depending on your risk of developing cardiovascular disease.\nYour General Practitioner can advise you about this risk and also on lifestyle risk reduction."));
-                } else if (((objectSuggest.getSystolic() >= 120) && (objectSuggest.getSystolic() < 139)) &&
-                        ((objectSuggest.getDiastolic() >= 80) && (objectSuggest.getDiastolic() < 89))) {
+                } else if (((objectSuggest.getSystolic() >= 120) && (objectSuggest.getSystolic() <= 139)) &&
+                        ((objectSuggest.getDiastolic() >= 80) && (objectSuggest.getDiastolic() <= 89))) {
                     viewHolderExpand.Data.setText(String.format("High-normal\nYour blood pressure is elevated.\nIt should be rechecked within 12 months or earlier depending on your risk of developing cardiovascular disease.\nYour General Practitioner can advise you about this risk and also on lifestyle risk reduction."));
                 } else if (((objectSuggest.getSystolic() >= 140) && (objectSuggest.getSystolic() < 159)) &&
                         ((objectSuggest.getDiastolic() >= 90) && (objectSuggest.getDiastolic() < 99))) {
