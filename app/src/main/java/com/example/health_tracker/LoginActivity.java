@@ -1,7 +1,9 @@
 package com.example.health_tracker;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -36,6 +39,7 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private AlarmManager alarmManager;
     private ProgressBar progressBar;
     private AlertDialog.Builder alert;
     private Button buttonLogin,buttonReset;
@@ -90,9 +94,11 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuthLogin=FirebaseAuth.getInstance();
 
 
+
+
+
+
         if ((firebaseAuthLogin.getCurrentUser() != null) && (firebaseAuthLogin.getCurrentUser().isEmailVerified())) {
-
-
             Intent intent=new Intent(LoginActivity.this, DashBoardActivity.class);
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();

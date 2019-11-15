@@ -44,6 +44,7 @@
                 android:backgroundTint="@color/white"
                 android:clickable="true"
                 android:paddingEnd="12sp"
+                android:visibility="gone"
                 />
 
 

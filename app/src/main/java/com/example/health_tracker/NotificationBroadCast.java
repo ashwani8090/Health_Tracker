@@ -3,18 +3,18 @@ package com.example.health_tracker;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 public class NotificationBroadCast extends BroadcastReceiver {
 
-    public NotificationBroadCast(){
-
+    public NotificationBroadCast() {
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent intent1 = new Intent(context, NotificationService.class);
-        context.startService(intent1);
-
-
+        Intent serviceIntent = new Intent(context, NotificationService.class);
+        context.startService(serviceIntent);
     }
+
+
 }

@@ -2,14 +2,15 @@ package com.example.health_tracker;
 
 public class Getter_Setter_Suggest {
 
-    private double height,weight,age,systolic ,diastolic,temp,sugar,bmi;
+    private double height,weight,systolic ,diastolic,temp,sugar,bmi;
     private String sex;
+    private int age;
 
     public Getter_Setter_Suggest() {
     }
 
     public Getter_Setter_Suggest(double height, double weight,
-                                 double age, double systolic, double diastolic,
+                                 int age, double systolic, double diastolic,
                                  double temp, double sugar, double bmi, String sex) {
         this.height = height;
         this.weight = weight;
@@ -38,11 +39,11 @@ public class Getter_Setter_Suggest {
         this.weight = weight;
     }
 
-    public double getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(double age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

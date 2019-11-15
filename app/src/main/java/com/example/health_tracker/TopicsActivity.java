@@ -40,6 +40,16 @@ public class TopicsActivity extends AppCompatActivity {
         linearLayoutManager=new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
 
+
+
+        //bacbtton code
+        findViewById(R.id.backTopicActivity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         list.clear();
         //dest recycler view
         list.add(new DataModel("Stress and Health",stressUrl));

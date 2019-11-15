@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,43 @@ public class AdapterExpanded extends RecyclerView.Adapter<AdapterExpanded.ViewHo
         viewHolderExpand.Title.setText(dataModel.getName());
         final boolean isExpanded = dataModelList.get(i).getExpanded();
         viewHolderExpand.Data.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+
+        //sugar
+        /*
+
+Fasting Plasma Glucose (FPG) Test
+The FPG is most reliable when done in the morning.
+Results and their meaning are shown in table 1.
+ If your fasting glucose level is 100 to 125 mg/dL,
+  you have a form of prediabetes called impaired fasting glucose (IFG),
+   meaning that you are more likely to develop type 2 diabetes but do not have it yet.
+   A level of 126 mg/dL or above, confirmed by repeating the test on another day, means that you have diabetes.
+Table 1. Fasting Plasma Glucose Test
+Plasma Glucose Result (mg/dL)   Diagnosis
+99 and below                    Normal
+100 to 125                      Prediabetes(impaired fasting glucose)
+126 and above                   Diabetes*
+
+  Random blood sugar test.
+  A blood sample will be taken at a random time.
+  Regardless of when you last ate,
+  a random blood sugar level of 200 milligrams per deciliter (mg/dL) — 11.1 millimoles per liter (mmol/L) — or higher suggests diabetes.*/
+
+        if (objectSuggest.getSugar() != 0) {
+
+
+            if (viewHolderExpand.Title.getText().toString().trim().equals("Body Sugar")) {
+
+                if (objectSuggest.getSugar() <= 99) {
+                    viewHolderExpand.Data.setText("Normal body\nSugar at fasting plasma glucose test");
+                } else if ((objectSuggest.getSugar() >= 100) && (objectSuggest.getSugar() < 125)) {
+                    viewHolderExpand.Data.setText("Prediabetes\nImpaired fasting glucose");
+                } else if (objectSuggest.getSugar() >= 126) {
+                    viewHolderExpand.Data.setText("Diabetes\nSugar at fasting plasma glucose test");
+                }
+            }
+        }
 
 
         //Blood Pressure
@@ -101,35 +139,40 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
 
 */
 
-        if (viewHolderExpand.Title.getText().toString().trim().equals("Blood Pressure")) {
-          //  Toast.makeText(context, objectSuggest.getSystolic()+" "+objectSuggest.getDiastolic(), Toast.LENGTH_SHORT).show();
-            if ((objectSuggest.getDiastolic() < 80) && (objectSuggest.getSystolic() < 120)) {
-                viewHolderExpand.Data.setText(String.format("\nYour blood pressure should be rechecked within 2 years or earlier depending on your risk of developing cardiovascular disease.\nYour General Practitioner can advise you about this risk and also on lifestyle risk reduction."));
-            } else if (((objectSuggest.getSystolic() >= 120) && (objectSuggest.getSystolic() < 139)) &&
-                    ((objectSuggest.getDiastolic() >= 80) && (objectSuggest.getDiastolic() < 89))) {
-                viewHolderExpand.Data.setText(String.format("Your blood pressure is elevated.\nIt should be rechecked within 12 months or earlier depending on your risk of developing cardiovascular disease.\nYour General Practitioner can advise you about this risk and also on lifestyle risk reduction."));
-            } else if (((objectSuggest.getSystolic() >= 140) && (objectSuggest.getSystolic() < 159)) &&
-                    ((objectSuggest.getDiastolic() >= 90) && (objectSuggest.getDiastolic() < 99))) {
-               viewHolderExpand.Data.setText(String.format("Grade 1 (mild) Hypertension\nYour blood pressure is elevated. It should be confirmed within 2 months.\nYour General Practitioner should advise you about lifestyle risk reduction and/or medication to lower your blood pressure."));
-            } else if (((objectSuggest.getSystolic() >= 160) && (objectSuggest.getSystolic() < 179)) &&
-                    ((objectSuggest.getDiastolic() >= 100) && (objectSuggest.getDiastolic() < 109))) {
-                viewHolderExpand.Data.setText("Grade 2 (moderate) hypertension");
-            } else if ((objectSuggest.getDiastolic() > 180) && (objectSuggest.getSystolic() > 110)) {
-                viewHolderExpand.Data.setText("Grade 3 (severe) hypertension");
-            } else if ((objectSuggest.getDiastolic() > 140) && (objectSuggest.getSystolic() > 90)) {
-                viewHolderExpand.Data.setText(String.format("Isolated systolic hypertension with widened pulse pressure\nYour blood pressure is elevated. It should be confirmed within 1 week and you may also need to see a specialist in this time.\n Your General Practitioner can advise you about lifestyle risk reduction and/or medication to lower your blood pressure."));
-            } else if ((objectSuggest.getDiastolic() > 160) && (objectSuggest.getSystolic() < 7)) {
-                viewHolderExpand.Data.setText("Isolated systolic hypertension with widened pulse pressure");
-            }else{
-                viewHolderExpand.Data.setText("Update data correctly");
-            }
+        if (objectSuggest.getSystolic() != 0) {
 
+            if (viewHolderExpand.Title.getText().toString().trim().equals("Blood Pressure")) {
+                //  Toast.makeText(context, objectSuggest.getSystolic()+" "+objectSuggest.getDiastolic(), Toast.LENGTH_SHORT).show();
+                if ((objectSuggest.getDiastolic() < 80) && (objectSuggest.getSystolic() < 120)) {
+                    viewHolderExpand.Data.setText(String.format("Normal\nYour blood pressure should be rechecked within 2 years or earlier depending on your risk of developing cardiovascular disease.\nYour General Practitioner can advise you about this risk and also on lifestyle risk reduction."));
+                } else if (((objectSuggest.getSystolic() >= 120) && (objectSuggest.getSystolic() < 139)) &&
+                        ((objectSuggest.getDiastolic() >= 80) && (objectSuggest.getDiastolic() < 89))) {
+                    viewHolderExpand.Data.setText(String.format("High-normal\nYour blood pressure is elevated.\nIt should be rechecked within 12 months or earlier depending on your risk of developing cardiovascular disease.\nYour General Practitioner can advise you about this risk and also on lifestyle risk reduction."));
+                } else if (((objectSuggest.getSystolic() >= 140) && (objectSuggest.getSystolic() < 159)) &&
+                        ((objectSuggest.getDiastolic() >= 90) && (objectSuggest.getDiastolic() < 99))) {
+                    viewHolderExpand.Data.setText(String.format("Grade 1 (mild) Hypertension\nYour blood pressure is elevated. It should be confirmed within 2 months.\nYour General Practitioner should advise you about lifestyle risk reduction and/or medication to lower your blood pressure."));
+                } else if (((objectSuggest.getSystolic() >= 160) && (objectSuggest.getSystolic() < 179)) &&
+                        ((objectSuggest.getDiastolic() >= 100) && (objectSuggest.getDiastolic() < 109))) {
+                    viewHolderExpand.Data.setText("Grade 2 (moderate) hypertension");
+                } else if ((objectSuggest.getDiastolic() > 180) && (objectSuggest.getSystolic() > 110)) {
+                    viewHolderExpand.Data.setText("Grade 3 (severe) hypertension");
+                } else if ((objectSuggest.getDiastolic() > 140) && (objectSuggest.getSystolic() > 90)) {
+                    viewHolderExpand.Data.setText(String.format("Isolated systolic hypertension with widened pulse pressure\nYour blood pressure is elevated. It should be confirmed within 1 week and you may also need to see a specialist in this time.\n Your General Practitioner can advise you about lifestyle risk reduction and/or medication to lower your blood pressure."));
+                } else if ((objectSuggest.getDiastolic() > 160) && (objectSuggest.getSystolic() < 7)) {
+                    viewHolderExpand.Data.setText("Isolated systolic hypertension with widened pulse pressure");
+                } else {
+                    viewHolderExpand.Data.setText("Update data correctly");
+                }
+
+
+            }
 
         }
 
+        if (objectSuggest.getTemp() != 0) {
 
-        //Temperature
-        if (viewHolderExpand.Title.getText().toString().trim().equals("Body Temperature")) {
+            //Temperature
+            if (viewHolderExpand.Title.getText().toString().trim().equals("Body Temperature")) {
             /* Classed as:         Celsius         Fahrenheit
         Hypothermia          <35.0°C          95.0°F
         Normal               36.5 - 37.5°C    97.7 - 99.5°F
@@ -142,20 +185,23 @@ Your General Practitioner should advise you about lifestyle risk reduction and/o
             */
 
 
-            if (objectSuggest.getTemp() < 35.0) {
+                if (objectSuggest.getTemp() < 35.0) {
 
-                viewHolderExpand.Data.setText(String.format("It may be case of Hypothermia\nMove the person out of the cold.If the person is wearing wet clothing, remove it. Cut away clothing if necessary to avoid excessive movement.Cover the person with blankets.And consult to your doctor"));
-            } else if ((objectSuggest.getTemp() >= 36) && (objectSuggest.getTemp() <= 37.5)) {
+                    viewHolderExpand.Data.setText(String.format("It may be case of Hypothermia\nMove the person out of the cold.If the person is wearing wet clothing, remove it. Cut away clothing if necessary to avoid excessive movement.Cover the person with blankets.And consult to your doctor"));
+                } else if ((objectSuggest.getTemp() >= 36) && (objectSuggest.getTemp() <= 37.5)) {
 
-                viewHolderExpand.Data.setText("Normal body Temperature");
+                    viewHolderExpand.Data.setText("Normal body Temperature");
 
-            } else if ((objectSuggest.getTemp() > 37) || (objectSuggest.getTemp() < 38.3)) {
+                } else if ((objectSuggest.getTemp() > 37) || (objectSuggest.getTemp() < 38.3)) {
 
-                viewHolderExpand.Data.setText(String.format("May be Fever or Hyperthermia\nsipping cool water or an electrolyte drinkloosening or removing excess clothinglying down and trying to relaxusing a fan to cool the skin"));
+                    viewHolderExpand.Data.setText(String.format("May be Fever or Hyperthermia\nsipping cool water or an electrolyte drinkloosening or removing excess clothinglying down and trying to relaxusing a fan to cool the skin"));
 
-            } else if ((objectSuggest.getTemp() >= 40) || (objectSuggest.getTemp() > 41.5)) {
+                } else if ((objectSuggest.getTemp() >= 40) || (objectSuggest.getTemp() > 41.5)) {
 
-                viewHolderExpand.Data.setText(String.format("May be Hyperpyrexia\na cool bath or cold, wet sponges put on the skin,liquid hydration through IV or from drinking,fever-reducing medications, such as dantrolene."));
+                    viewHolderExpand.Data.setText(String.format("May be Hyperpyrexia\na cool bath or cold, wet sponges put on the skin,liquid hydration through IV or from drinking,fever-reducing medications, such as dantrolene."));
+
+                }
+
 
             }
 
