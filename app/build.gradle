@@ -32,6 +32,7 @@ dependencies {
 
 
 
+
     //noinspection GradleDependency
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     //noinspection GradleDependency
@@ -42,6 +43,21 @@ dependencies {
     implementation 'com.jjoe64:graphview:4.2.2'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+
+        exclude group: 'com.android.support', module: 'support-annotations'
+
+    })
+
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'org.jetbrains:annotations-java5:15.0'

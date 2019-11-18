@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical"
-    android:paddingBottom="50dp">
+    android:paddingBottom="50dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,31 +52,12 @@
         </RelativeLayout>
 
 
+
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           >
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/signup_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:drawableEnd="@drawable/icon_check"
-                android:drawableTint="#27FFFFFF"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:maxLength="10"
-                android:visibility="gone"
-                android:textSize="15sp" />
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="30dp">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/signup_email"
@@ -104,8 +87,9 @@
                 android:layout_marginBottom="10dp"
                 android:drawableEnd="@drawable/icon_check"
                 android:drawableTint="#27FFFFFF"
-                android:hint="Name"
-                android:textSize="15sp" />
+                android:hint="@string/name"
+                android:textSize="15sp"
+                tools:targetApi="m" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -121,7 +105,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Password(length 7)"
+                android:hint="@string/password_length_7"
                 android:inputType="textPassword"
                 android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
@@ -156,7 +140,7 @@
                 android:id="@+id/radio_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female"
+                android:text="@string/female"
                 />
 
         </RadioGroup>
@@ -165,7 +149,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Age"
+            android:text="@string/age"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:layout_marginStart="10dp"/>
@@ -187,7 +171,7 @@
             android:id="@+id/weight_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weight"
+            android:text="@string/weight"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:layout_marginStart="10dp"/>
@@ -199,8 +183,9 @@
             android:backgroundTint="#C4C2C2"
             android:layout_marginTop="2dp"
             android:dropDownWidth="50dp"
-            android:hint="Kilogram"
-            android:inputType="textNoSuggestions|number"
+            android:textSize="15sp"
+            android:hint="@string/kilogram"
+            android:inputType="number"
             android:layout_marginStart="10dp">
 
         </EditText>
@@ -210,7 +195,7 @@
             android:id="@+id/height_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Height"
+            android:text="@string/height"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:layout_marginStart="10dp"/>
@@ -222,8 +207,9 @@
             android:backgroundTint="#C4C2C2"
             android:layout_marginTop="2dp"
             android:dropDownWidth="50dp"
-            android:hint="Centimeter"
-            android:inputType="number|textNoSuggestions"
+            android:hint="@string/centimeter"
+            android:textSize="15sp"
+            android:inputType="number"
             android:layout_marginStart="10dp">
 
         </EditText>
@@ -245,7 +231,7 @@
             android:backgroundTint="@color/colorAccent"
             android:enabled="false"
             android:gravity="center"
-            android:text="SIGN UP"
+            android:text="@string/sign_up1"
             android:textColor="#9B9999"
             android:textSize="15sp" />
 

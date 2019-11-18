@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +36,7 @@ public class DailyStatusActivity extends AppCompatActivity {
 
 
     private int index = 0;
-    private TextView BP, Sugar, WaterTaken, Temp, MainTitle, dateDaily,sysText,diaText,valueText;
+    private TextView BP, Sugar, WaterTaken, Temp, MainTitle, dateDaily, sysText, diaText, valueText;
     private DatabaseReference firebaseDatabase;
     private String firebaseAuth;
     private PointsGraphSeries<DataPoint> pointsGraphSeries;
@@ -48,7 +46,6 @@ public class DailyStatusActivity extends AppCompatActivity {
     private FitChart fitChartDia, fitChartSys, fitValue;
     private RelativeLayout fitRelative;
     private LinearLayout fitLinear;
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -67,10 +64,10 @@ public class DailyStatusActivity extends AppCompatActivity {
         fitChartSys = findViewById(R.id.fitsys);
         fitValue = findViewById(R.id.fitvalue);
         fitRelative = findViewById(R.id.fitRelative);
-        fitLinear=findViewById(R.id.valueLinear);
-        sysText=findViewById(R.id.systolicChange);
-        diaText=findViewById(R.id.diastolicChange);
-        valueText=findViewById(R.id.valuefit);
+        fitLinear = findViewById(R.id.valueLinear);
+        sysText = findViewById(R.id.systolicChange);
+        diaText = findViewById(R.id.diastolicChange);
+        valueText = findViewById(R.id.valuefit);
 
 
         //fitchart
@@ -78,7 +75,6 @@ public class DailyStatusActivity extends AppCompatActivity {
         fitChartDia.setMaxValue(250);
         fitChartSys.setMinValue(0);
         fitChartSys.setMaxValue(250);
-
 
 
         try {
@@ -213,7 +209,7 @@ public class DailyStatusActivity extends AppCompatActivity {
         values.add(new FitChartValue(0f,
                 ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
         fitValue.setValues(values);
-        valueText.setText("0"+" mg/dL");
+        valueText.setText("0" + " mg/dL");
 
 
         firebaseDatabase.child("Sugar").addValueEventListener(new ValueEventListener() {
@@ -228,7 +224,7 @@ public class DailyStatusActivity extends AppCompatActivity {
                         String time = formatter.format(date);
                         if (time.equals(formatter.format(new Date().getTime()))) {
                             fitValue.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()));
-                            valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+" mg/dL");
+                            valueText.setText("" + dataSnapshot1.getValue(Getter_setter_Database.class).getValue() + " mg/dL");
 
                         }
                     } catch (ParseException e) {
@@ -255,7 +251,7 @@ public class DailyStatusActivity extends AppCompatActivity {
         values.add(new FitChartValue(0f,
                 ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
         fitValue.setValues(values);
-        valueText.setText("0"+" Litre");
+        valueText.setText("0" + " Litre");
 
 
         firebaseDatabase.child("Water").addValueEventListener(new ValueEventListener() {
@@ -273,7 +269,7 @@ public class DailyStatusActivity extends AppCompatActivity {
                             values.add(new FitChartValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()),
                                     ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
                             fitValue.setValues(values);
-                            valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+" Litre");
+                            valueText.setText("" + dataSnapshot1.getValue(Getter_setter_Database.class).getValue() + " Litre");
 
                         }
                     } catch (ParseException e) {
@@ -299,7 +295,7 @@ public class DailyStatusActivity extends AppCompatActivity {
         values.add(new FitChartValue(0f,
                 ContextCompat.getColor(getApplicationContext(), R.color.skyblue)));
         fitValue.setValues(values);
-        valueText.setText("0"+"ºC");
+        valueText.setText("0" + "ºC");
 
 
         firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
@@ -313,7 +309,7 @@ public class DailyStatusActivity extends AppCompatActivity {
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                         String time = formatter.format(date);
                         if (time.equals(formatter.format(new Date().getTime()))) {
-                            valueText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getValue()+"ºC");
+                            valueText.setText("" + dataSnapshot1.getValue(Getter_setter_Database.class).getValue() + "ºC");
                             List<FitChartValue> values = new ArrayList<>();
                             values.add(new FitChartValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getValue()),
                                     ContextCompat.getColor(getApplicationContext(), R.color.darkred)));
@@ -352,8 +348,8 @@ public class DailyStatusActivity extends AppCompatActivity {
                         if (time.equals(formatter.format(new Date().getTime()))) {
                             fitChartDia.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getDiastolic()));
                             fitChartSys.setValue(Float.parseFloat(dataSnapshot1.getValue(Getter_setter_Database.class).getSystolic()));
-                            sysText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getSystolic()+"/68");
-                            diaText.setText(""+dataSnapshot1.getValue(Getter_setter_Database.class).getDiastolic()+"/198");
+                            sysText.setText("" + dataSnapshot1.getValue(Getter_setter_Database.class).getSystolic() + "/68");
+                            diaText.setText("" + dataSnapshot1.getValue(Getter_setter_Database.class).getDiastolic() + "/198");
 
                         }
                     } catch (ParseException e) {

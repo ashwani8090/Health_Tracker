@@ -1,37 +1,25 @@
 package com.example.health_tracker;
 
 import android.app.ActivityManager;
-import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
-import android.os.IBinder;
 import android.provider.Settings;
-import android.support.constraint.solver.widgets.Helper;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class NotificationService extends IntentService {
 
 
-    private Context context;
     private static final String CHANNEL_ID = "1";
+    private Context context;
 
     public NotificationService() {
         super("string");
@@ -44,7 +32,7 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        context=getApplicationContext();
+        context = getApplicationContext();
         createNotificationChannel();
 
     }
@@ -94,8 +82,7 @@ public class NotificationService extends IntentService {
         public static boolean isAppRunning(final Context context, final String packageName) {
             final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             final List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
-            if (procInfos != null)
-            {
+            if (procInfos != null) {
                 for (final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
                     if (processInfo.processName.equals(packageName)) {
                         return true;

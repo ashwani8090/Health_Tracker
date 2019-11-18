@@ -22,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.text.ParseException;
@@ -88,7 +87,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         }
 
 
-
         pointsGraphSeries = new PointsGraphSeries<>();
         pointsGraphSeries2 = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries2);
@@ -118,7 +116,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         });*/
 
 
-      //back button
+        //back button
         findViewById(R.id.backMonthly).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,11 +124,8 @@ public class HealthMonthlyActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
 
-
             }
         });
-
-
 
 
         //background for blood pressure
@@ -305,10 +300,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         chart.addSeries(pointsGraphSeries);
 
 
-
-
-
-
         firebaseDatabase.child("Temperature").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SimpleDateFormat")
             @Override
@@ -356,7 +347,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
                 try {
 
 
-
                     chart.setCursorMode(true);
                     chart.getViewport().setXAxisBoundsManual(true);
                     chart.getViewport().setMinY(0);
@@ -392,8 +382,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         dateIntegerMapDia.clear();
         dataPointsDia = null;
         chart.removeAllSeries();
-
-
 
 
         pointsGraphSeries = new PointsGraphSeries<>();
@@ -483,7 +471,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         chart.removeAllSeries();
 
 
-
         pointsGraphSeries = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries);
 
@@ -570,9 +557,6 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         dataPointsDia = null;
         dataPointsSys = null;
         chart.removeAllSeries();
-
-
-
 
 
         colorIndex.setVisibility(View.VISIBLE);

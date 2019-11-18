@@ -1,9 +1,9 @@
 package com.example.health_tracker;
 
-public class Getter_setter_Database  {
+public class Getter_setter_Database {
 
 
-    private String systolic,diastolic,value;
+    private String systolic, diastolic, value;
 
     public Getter_setter_Database() {
     }

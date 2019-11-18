@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.text.DateFormat;
@@ -48,7 +47,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
     private Integer index1 = 0, index2 = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +58,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         Temp = findViewById(R.id.tempWeek);
         MainTitle = findViewById(R.id.bpDailyWeek);
         chart = findViewById(R.id.chartWeek);
-        colorIndex=findViewById(R.id.colorIndexWeek);
+        colorIndex = findViewById(R.id.colorIndexWeek);
 
         dateOfWeek.clear();
 
@@ -139,8 +137,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     public void chartShowWeek(View view) {
@@ -251,9 +247,6 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         chart.addSeries(pointsGraphSeries);
         pointsGraphSeries2 = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries2);
-
-
-
 
 
         firebaseDatabase.child("BloodPressure").addValueEventListener(new ValueEventListener() {

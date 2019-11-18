@@ -2,7 +2,6 @@ package com.example.health_tracker;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +33,7 @@ public class SplashPageActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
 
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,8);
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
@@ -42,18 +41,13 @@ public class SplashPageActivity extends AppCompatActivity {
         Intent i = new Intent(this, NotificationBroadCast.class);
 
         //creating a pending intent using the intent
-          pendingIntent = PendingIntent.getBroadcast(this, 0, i, 0);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, i, 0);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pendingIntent);
 
 
-
-
-
     }
-
-
 
 
 }

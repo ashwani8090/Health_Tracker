@@ -3,8 +3,8 @@ package com.example.health_tracker;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -24,11 +24,11 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         webView = findViewById(R.id.webview);
-        progressBarWeb=findViewById(R.id.progressBar_web);
+        progressBarWeb = findViewById(R.id.progressBar_web);
 
-        intent=getIntent();
+        intent = getIntent();
 
-        GlobalUrl=intent.getStringExtra("Url");
+        GlobalUrl = intent.getStringExtra("Url");
 
 
         findViewById(R.id.backWebView).setOnClickListener(new View.OnClickListener() {
@@ -50,8 +50,7 @@ public class WebViewActivity extends AppCompatActivity {
 
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void StartWebView(String url)
-    {
+    private void StartWebView(String url) {
 
         WebSettings settings = webView.getSettings();
 

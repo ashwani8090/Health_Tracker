@@ -18,16 +18,16 @@ public class DataModel {
         this.id = id;
     }
 
-    public DataModel(String name,int id) {
+    public DataModel(String name, int id) {
         this.name = name;
         this.id = id;
-        this.expanded=false;
+        this.expanded = false;
     }
 
-    public DataModel(String name,String url) {
+    public DataModel(String name, String url) {
         this.name = name;
-        this.url=url;
-        this.expanded=false;
+        this.url = url;
+        this.expanded = false;
     }
 
     public String getUrl() {

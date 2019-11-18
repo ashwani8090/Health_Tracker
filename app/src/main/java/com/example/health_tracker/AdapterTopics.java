@@ -16,7 +16,7 @@ import java.util.List;
 public class AdapterTopics extends RecyclerView.Adapter<AdapterTopics.ViewHolderExpand> {
 
     private Context context;
-    private List<DataModel> dataModelList=new ArrayList<>();
+    private List<DataModel> dataModelList = new ArrayList<>();
     private DataModel dataModel;
 
     public AdapterTopics(Context context, List<DataModel> dataModelList) {
@@ -36,15 +36,15 @@ public class AdapterTopics extends RecyclerView.Adapter<AdapterTopics.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderExpand viewHolderExpand, int i) {
 
-        dataModel=dataModelList.get(i);
+        dataModel = dataModelList.get(i);
 
         viewHolderExpand.Title.setText(dataModel.getName());
-         viewHolderExpand.Title.setOnClickListener(new View.OnClickListener() {
+        viewHolderExpand.Title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context,WebViewActivity.class).
-                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK).
-                        putExtra("Url",dataModelList.get(viewHolderExpand.getAdapterPosition()).getUrl()));
+                context.startActivity(new Intent(context, WebViewActivity.class).
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK).
+                        putExtra("Url", dataModelList.get(viewHolderExpand.getAdapterPosition()).getUrl()));
                 notifyDataSetChanged();
 
             }
@@ -62,11 +62,12 @@ public class AdapterTopics extends RecyclerView.Adapter<AdapterTopics.ViewHolder
 
         private TextView Title;
         private RelativeLayout relativeLayout;
+
         public ViewHolderExpand(@NonNull View itemView) {
             super(itemView);
-            Title=itemView.findViewById(R.id.titleTopicExpand);
+            Title = itemView.findViewById(R.id.titleTopicExpand);
 
-            relativeLayout=itemView.findViewById(R.id.webviewRelative);
+            relativeLayout = itemView.findViewById(R.id.webviewRelative);
         }
     }
 }

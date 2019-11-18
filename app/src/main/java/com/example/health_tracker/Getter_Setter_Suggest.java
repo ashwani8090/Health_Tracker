@@ -2,7 +2,7 @@ package com.example.health_tracker;
 
 public class Getter_Setter_Suggest {
 
-    private double height,weight,systolic ,diastolic,temp,sugar,bmi;
+    private double height, weight, systolic, diastolic, temp, sugar, bmi;
     private String sex;
     private int age;
 

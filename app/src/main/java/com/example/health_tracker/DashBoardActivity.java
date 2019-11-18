@@ -56,9 +56,6 @@ public class DashBoardActivity extends AppCompatActivity {
     private Getter_setter_Signup signup;
     private DatabaseReference firebaseDatabaseUser;
     private FirebaseUser firebaseAuthSuggest;
-    private Dialog dialog;
-    private LinearLayout linearLayoutPopUp;
-    private Getter_setter_Signup getterSetterSignup;
     private PopupMenu popupMenu;
     private FirebaseAuth firebaseAuth;
     private RecyclerView recyclerView;
@@ -246,7 +243,7 @@ public class DashBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-if(validate(HeightEdit.getText().toString(),WeightEdit.getText().toString(),AgeEdit.getText().toString())){
+                if (validate(HeightEdit.getText().toString(), WeightEdit.getText().toString(), AgeEdit.getText().toString())) {
 
                     firebaseProfile.child("height").setValue(HeightEdit.getText().toString());
                     firebaseProfile.child("weight").setValue(WeightEdit.getText().toString());
@@ -262,7 +259,7 @@ if(validate(HeightEdit.getText().toString(),WeightEdit.getText().toString(),AgeE
                         }
                     });
 
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Every field must be filled", Toast.LENGTH_SHORT).show();
                 }
 
@@ -270,20 +267,17 @@ if(validate(HeightEdit.getText().toString(),WeightEdit.getText().toString(),AgeE
         });
 
 
-
     }
 
-    public boolean validate(String age,String weight,String height){
+    public boolean validate(String age, String weight, String height) {
 
-        if(age.isEmpty() || weight.isEmpty() || height.isEmpty())
-            return  false;
+        if (age.isEmpty() || weight.isEmpty() || height.isEmpty())
+            return false;
         else
-            return  true;
+            return true;
 
 
     }
-
-
 
 
     private void createNotificationChannel() {

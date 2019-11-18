@@ -3,18 +3,18 @@ package com.example.health_tracker;
 public class Getter_setter_Signup {
 
 
-    private String Email,Name,Gender,Age;
+    private String Email, Name, Gender, Age;
     private String height;
     private String weight;
 
 
-    public Getter_setter_Signup(String email, String name, String gender, String age,String height,String weight) {
+    public Getter_setter_Signup(String email, String name, String gender, String age, String height, String weight) {
         Email = email;
         Name = name;
         Gender = gender;
         Age = age;
-        this.height=height;
-        this.weight=weight;
+        this.height = height;
+        this.weight = weight;
     }
 
     public Getter_setter_Signup() {

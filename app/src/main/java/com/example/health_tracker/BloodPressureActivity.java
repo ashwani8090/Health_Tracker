@@ -1,14 +1,12 @@
 package com.example.health_tracker;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +39,7 @@ public class BloodPressureActivity extends AppCompatActivity {
         try {
             firebaseAuth = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-            firebaseDatabase = FirebaseDatabase.getInstance().getReference("User").child(""+ firebaseAuth).child("BloodPressure");
+            firebaseDatabase = FirebaseDatabase.getInstance().getReference("User").child("" + firebaseAuth).child("BloodPressure");
 
         } catch (Exception e) {
 
@@ -73,7 +71,7 @@ public class BloodPressureActivity extends AppCompatActivity {
 
                 SystolicValue = SystolicEdit.getText().toString().trim();
                 DiastolicValue = DiastolicEdit.getText().toString().trim();
-                if((!SystolicValue.isEmpty()) && (!DiastolicValue.isEmpty()))
+                if ((!SystolicValue.isEmpty()) && (!DiastolicValue.isEmpty()))
                     SaveToDatabase(SystolicValue, DiastolicValue);
                 else
                     Toast.makeText(BloodPressureActivity.this, "Enter value please", Toast.LENGTH_SHORT).show();
@@ -91,17 +89,16 @@ public class BloodPressureActivity extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDate = df.format(c.getTime());
 
-            firebaseDatabase.child(""+formattedDate).setValue(new Getter_setter_Database(systolicValue,diastolicValue)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            firebaseDatabase.child("" + formattedDate).setValue(new Getter_setter_Database(systolicValue, diastolicValue)).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Toast.makeText(BloodPressureActivity.this, "Successfully Saved", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(BloodPressureActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(BloodPressureActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
 
 
         } catch (Exception e) {
