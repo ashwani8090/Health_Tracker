@@ -307,7 +307,7 @@ public class LoginActivity extends AppCompatActivity {
             else{
                 buttonLogin.setEnabled(true);
                 buttonLogin.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(86, 101, 115  )));
-
+                buttonLogin.setTextColor(Color.WHITE);
             }
 
 

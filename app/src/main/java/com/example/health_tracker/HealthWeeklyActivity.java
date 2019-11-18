@@ -115,7 +115,7 @@ public class HealthWeeklyActivity extends AppCompatActivity {
         // staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6"});
         //  chart.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
         // chart.getGridLabelRenderer().setLabelsSpace(5);
-        chart.getGridLabelRenderer().setPadding(50);
+        chart.getGridLabelRenderer().setPadding(60);
         chart.getGridLabelRenderer().setVerticalAxisTitle("BLOOD PRESSURE");
         chart.getGridLabelRenderer().setHorizontalAxisTitle("WEEK DAYS");
         chart.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.RED);

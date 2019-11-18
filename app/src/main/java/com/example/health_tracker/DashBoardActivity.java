@@ -246,23 +246,44 @@ public class DashBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                firebaseProfile.child("height").setValue(HeightEdit.getText().toString());
-                firebaseProfile.child("weight").setValue(WeightEdit.getText().toString());
-                firebaseProfile.child("age").setValue(AgeEdit.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            onStart();
-                            Toast.makeText(DashBoardActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+if(validate(HeightEdit.getText().toString(),WeightEdit.getText().toString(),AgeEdit.getText().toString())){
+
+                    firebaseProfile.child("height").setValue(HeightEdit.getText().toString());
+                    firebaseProfile.child("weight").setValue(WeightEdit.getText().toString());
+                    firebaseProfile.child("age").setValue(AgeEdit.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                onStart();
+                                Toast.makeText(DashBoardActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            }
+
+
                         }
-                    }
-                });
+                    });
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "Every field must be filled", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
 
+
     }
+
+    public boolean validate(String age,String weight,String height){
+
+        if(age.isEmpty() || weight.isEmpty() || height.isEmpty())
+            return  false;
+        else
+            return  true;
+
+
+    }
+
+
 
 
     private void createNotificationChannel() {
@@ -562,3 +583,5 @@ public class DashBoardActivity extends AppCompatActivity {
 
 
 }
+
+

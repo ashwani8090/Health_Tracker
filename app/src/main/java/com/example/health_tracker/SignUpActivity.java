@@ -384,7 +384,7 @@ public class SignUpActivity extends AppCompatActivity {
             } else {
                 buttonSignUp.setEnabled(true);
                 buttonSignUp.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(86, 101, 115)));
-                buttonSignUp.setTextColor(Color.BLACK);
+                buttonSignUp.setTextColor(Color.WHITE);
 
             }
 

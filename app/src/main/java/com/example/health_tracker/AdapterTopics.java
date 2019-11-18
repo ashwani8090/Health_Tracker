@@ -43,7 +43,8 @@ public class AdapterTopics extends RecyclerView.Adapter<AdapterTopics.ViewHolder
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context,WebViewActivity.class).
-                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("Url",dataModelList.get(viewHolderExpand.getAdapterPosition()).getUrl()));
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK).
+                        putExtra("Url",dataModelList.get(viewHolderExpand.getAdapterPosition()).getUrl()));
                 notifyDataSetChanged();
 
             }

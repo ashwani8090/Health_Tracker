@@ -23,7 +23,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="SIGN UP"
                 android:textColor="#FAF6F6"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView

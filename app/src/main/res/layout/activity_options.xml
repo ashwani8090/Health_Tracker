@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DashBoardActivity">
 
     <ScrollView
@@ -27,8 +28,9 @@
                 android:background="@drawable/oval_background"
                 android:backgroundTint="@color/white"
                 android:clickable="true"
-                android:paddingEnd="12sp"
-                android:focusableInTouchMode="true"
+                android:paddingEnd="13dp"
+                android:layout_margin="5dp"
+                android:focusableInTouchMode="false"
                 tools:ignore="UnusedAttribute" />
 
 
@@ -88,6 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/relative_user"
                 android:padding="50dp"
+                android:background="@color/white"
                 />
 
         </RelativeLayout>

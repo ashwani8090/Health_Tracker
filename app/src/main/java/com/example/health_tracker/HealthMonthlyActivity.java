@@ -93,7 +93,7 @@ public class HealthMonthlyActivity extends AppCompatActivity {
         pointsGraphSeries2 = new PointsGraphSeries<>();
         chart.addSeries(pointsGraphSeries2);
         chart.addSeries(pointsGraphSeries);
-        chart.getGridLabelRenderer().setPadding(50);
+        chart.getGridLabelRenderer().setPadding(60);
 
         //graph view
         chart.getViewport().setXAxisBoundsManual(true);
