@@ -5,6 +5,7 @@ import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,7 +44,7 @@ public class NotificationService extends IntentService {
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Health Tracker";
-            String description = "Track your health..keep healthy";
+            String description = "Enter your daily stats";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
@@ -56,18 +57,21 @@ public class NotificationService extends IntentService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_pulse)
                 .setContentTitle("Health Tracker")
-                .setContentText("Track your health..keep healthy.")
+                .setContentText("Track your health...keep healthy")
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setVibrate(new long[]{100, 100})
                 .setColor(Color.RED)
-
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        if (!Helper.isAppRunning(context, "com.example.health_tracker")) {
+
+
+        if(!isAppForground(getApplicationContext())){
             Intent intent = new Intent(context, SplashPageActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             builder.setContentIntent(pendingIntent);
+            builder.setContentText("Enter your daily stats");
+            builder.setAutoCancel(true);
 
         }
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -77,19 +81,17 @@ public class NotificationService extends IntentService {
     }
 
 
-    public static class Helper {
-
-        public static boolean isAppRunning(final Context context, final String packageName) {
-            final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-            final List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
-            if (procInfos != null) {
-                for (final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
-                    if (processInfo.processName.equals(packageName)) {
-                        return true;
-                    }
-                }
+    public boolean isAppForground(Context mContext) {
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            ComponentName topActivity = tasks.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(mContext.getPackageName())) {
+                return false;
             }
-            return false;
         }
+        return true;
     }
+
+
 }
